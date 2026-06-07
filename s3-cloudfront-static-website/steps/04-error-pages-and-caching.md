@@ -95,14 +95,91 @@ curl -I https://d111abc123xyz.cloudfront.net/ | grep -i x-cache
 
 ---
 
-## 4.4 Concept + Action — Cache Invalidation
+## 4.4 Concept — Cache Invalidation
 
-Here's the catch with caching: if you edit `index.html`, re-upload it to S3, and refresh
-your browser, you'll **still see the old page** — because CloudFront is serving the cached
-copy until its TTL expires (up to 24 hours).
+### The problem invalidation solves
 
-A **cache invalidation** tells CloudFront to immediately drop cached copies of the paths
-you specify, so the next request fetches the fresh file from S3.
+Caching is what makes CloudFront fast, but it creates one predictable headache: **stale
+content**. Once an edge location has cached `index.html`, it keeps serving that exact copy
+until the TTL expires — which, with `CachingOptimized`, can be up to **24 hours**. The edge
+has no idea you changed the file in S3. From its point of view, the cached copy is still
+"fresh enough."
+
+So this very normal sequence breaks:
+
+1. You edit `index.html` and re-upload it to S3.
+2. You refresh the CloudFront URL.
+3. You **still see the old page** — and so does every visitor — for up to a full day.
+
+S3 has the new file. The edge is serving the old one. Nothing is broken; CloudFront is
+doing exactly what you told it to do. You just have no way to see your update until the TTL
+runs out.
+
+### What an invalidation actually does
+
+A **cache invalidation** is an explicit command to CloudFront: *"drop your cached copies of
+these paths, across all edge locations, right now."* It does **not** delete anything from
+S3 and it does **not** push the new file anywhere. It simply marks the cached objects as
+expired so that the **next** request for each path is forced to be a cache miss — CloudFront
+re-fetches the current file from S3 and caches that.
+
+```mermaid
+flowchart TD
+    Up["You re-upload index.html to S3<br/>(S3 now has the new version)"]
+    Stale["Edge locations still hold<br/>the OLD cached index.html<br/>→ visitors see stale content"]
+    Inv["You create an invalidation for /*<br/>(or /index.html)"]
+    Drop["CloudFront marks those cached<br/>objects expired at every edge"]
+    Next["Next request = forced cache MISS<br/>→ re-fetch fresh file from S3 → re-cache"]
+    Fresh["Visitors now see the new page"]
+    Up --> Stale --> Inv --> Drop --> Next --> Fresh
+```
+
+### Why it matters
+
+- **You control when updates go live.** Without invalidation your only options are to wait
+  out the TTL or to set very short TTLs everywhere — and short TTLs throw away most of the
+  performance benefit of a CDN (every edge keeps going back to S3). Invalidation lets you
+  keep long TTLs (fast, cheap, low origin load) *and* still ship an update the moment you
+  need to.
+- **It's how you fix mistakes fast.** Pushed a typo, a broken link, or wrong pricing to your
+  homepage? A 24-hour wait is not acceptable. An invalidation makes the correction visible
+  in seconds-to-a-minute.
+- **It keeps the bucket as the source of truth.** Your deploy process only ever uploads to
+  S3. Invalidation is the one extra step that makes "what's in S3" and "what visitors see"
+  line up again — without it, those two can silently drift apart.
+
+### How it behaves (things worth knowing)
+
+- **Paths, not files.** You invalidate **paths** like `/index.html`, `/css/site.css`, or a
+  wildcard like `/*` (everything) or `/images/*` (a subtree). The path is matched against
+  the request URL, not the S3 key.
+- **It's global and asynchronous.** One invalidation request fans out to every edge
+  location. CloudFront reports it as `InProgress`, then `Completed`. For a small site it
+  usually finishes in a few seconds up to a minute.
+- **It only affects already-cached copies.** Objects not currently cached are unaffected
+  (there's nothing to drop). Requests in flight may still get the old copy until the
+  invalidation completes.
+- **It doesn't warm the cache.** The new file isn't fetched until the *next* request. The
+  first visitor after an invalidation pays the cache-miss cost; everyone after them gets the
+  cached fresh copy.
+
+### When to invalidate vs. when not to
+
+| Situation | Best approach |
+|-----------|---------------|
+| Small HTML site, occasional edits (this project) | Invalidate `/*` after each upload — simple and free at this scale. |
+| Frequent deploys, many assets (CSS/JS/images) | **Versioned file names** (`app.a1b2c3.js`) so each new build has a brand-new URL → no invalidation needed, infinite cache. |
+| One file changed | Invalidate just that path (`/index.html`) instead of `/*` — more precise, and keeps the rest of your cache warm. |
+| Content that must always be current | Set a short/zero TTL on that specific path via a cache policy, rather than invalidating constantly. |
+
+> **Why versioning is the production favourite:** an invalidation tells every edge to throw
+> away good cache; a new file name means the old URL is still validly cached and the new URL
+> is simply a fresh miss. No cache is wasted, and you never race against propagation time.
+> For a simple site, though, `/*` invalidation is perfectly fine and easier to reason about.
+
+---
+
+## 4.5 Action — Run a Cache Invalidation
 
 **Try it:**
 
@@ -120,10 +197,8 @@ you specify, so the next request fetches the fresh file from S3.
 
 > **Cost note:** the first **1,000 invalidation paths per month are free**. `/*` counts as
 > a single path. After that, it's $0.005 per path. For learning, you'll never hit the limit.
->
-> **Best practice:** instead of invalidating on every deploy, production sites often change
-> the file name when content changes (e.g. `app.a1b2c3.js`) so the URL itself is new and no
-> invalidation is needed. For simple HTML sites, `/*` invalidation is perfectly fine.
+> (See the *When to invalidate vs. when not to* table above for why production sites often
+> avoid invalidations altogether by versioning file names.)
 
 ### AWS CLI (Alternative)
 
@@ -140,7 +215,10 @@ aws cloudfront create-invalidation \
 - [ ] Custom error responses map **403 → /error.html (404)** and **404 → /error.html (404)**
 - [ ] Requesting a non-existent path shows your `error.html`
 - [ ] You understand cache **Hit** vs **Miss** from the `x-cache` header
+- [ ] You can explain **why** invalidation is needed (stale edge cache vs. updated S3 file)
+- [ ] You know an invalidation drops cached copies (it does **not** push or delete S3 files)
 - [ ] You edited a file, re-uploaded it, and used an **invalidation** to make the change live
+- [ ] You know when to invalidate `/*` vs. a single path vs. versioned file names
 
 ---
 

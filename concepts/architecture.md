@@ -1,9 +1,5 @@
 # Architecture — AWS Architecture
 
-> **All architecture diagrams for this topic live in this file**, expressed as Mermaid.
-> No other folder (installation, demos, labs, projects, reference) contains architecture
-> diagrams — they link back here.
-
 ## Technical Explanation
 
 This document is the visual map of every architecture taught in the topic, one diagram per

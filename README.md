@@ -43,6 +43,17 @@ Work through these two projects in order. Project 1 covers fundamentals; Project
 | 1 | [ECS Fargate Basics](./ecs-fargate-basics/README.md) | ECS, Fargate, ECR Public, IAM, CloudWatch | Containerize a Flask app, push to ECR Public, run as a Fargate task — understand ECS fundamentals |
 | 2 | [ECS Fargate Advanced](./ecs-fargate-advanced/README.md) | ECS, Fargate, ECR Public, ALB, VPC, IAM, CloudWatch, Auto Scaling | Production-grade deployment: VPC networking, Application Load Balancer, rolling deployments, Auto Scaling, Container Insights, Docker Compose |
 
+### Web App Architecture — Native vs. Serverless (Beginner → Advanced)
+
+Build the **same monitored web application twice** — once on native AWS, once serverless —
+to compare cost, operations, scaling, and observability. Each is a complete, end-to-end
+cloud architecture with monitoring, alerting, audit, and a GitHub Actions CI/CD pipeline.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [EC2 + VPC Monitored Web App](./ec2-vpc-monitored-webapp/README.md) | EC2, VPC, ALB, Auto Scaling, CloudWatch, SNS, CloudTrail, IAM, SSM, GitHub Actions | Full native architecture: custom VPC (public/private subnets, NAT), EC2 fleet behind an ALB with Auto Scaling, CloudWatch metrics/alarms/dashboards, SNS email alerts, CloudTrail audit, Boto3 monitoring automation, and an OIDC→SSM deploy pipeline |
+| 2 | [Serverless Monitored Web App](./serverless-monitored-webapp/README.md) | API Gateway, Lambda, CloudWatch, SNS, CloudTrail, IAM, GitHub Actions | The same app with no servers: API Gateway + Lambda, the same CloudWatch/SNS/CloudTrail observability, Boto3 automation, and an OIDC→`update-function-code` pipeline — with a side-by-side native-vs-serverless comparison |
+
 ---
 
 ## How This Repo Is Organized

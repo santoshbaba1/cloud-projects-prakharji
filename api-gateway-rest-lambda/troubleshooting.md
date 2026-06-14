@@ -39,11 +39,43 @@ effect immediately and do **not** need a redeploy — only structural changes do
 
 ### `{"message":"Missing Authentication Token"}`
 
-**Cause:** You hit a path/method that isn't defined, or you forgot the stage name in the URL.
-This is API Gateway's generic "no matching route" response.
+**Cause:** Despite the wording, this is **almost never about auth.** It's API Gateway's
+generic "**no matching route** for this method + path on the deployed stage." The request
+reached API Gateway but didn't match any resource/method. Common triggers:
 
-**Fix:** Include the stage: `https://<id>.execute-api.us-east-1.amazonaws.com/prod/quotes`,
-and confirm the method exists on that resource.
+- **Stage name missing from the URL** — e.g. calling `.../quotes` instead of `.../prod/quotes`.
+- **Hitting the bare stage root** — `.../prod` with no resource path. The root `/` has no
+  method, so it returns this error.
+- **Not deployed / not redeployed** — the resource or method exists in the console but wasn't
+  deployed to `prod`, so the stage doesn't serve it.
+- **Wrong HTTP method** — e.g. `POST` to a path that only defines `GET`, or `GET /version`
+  when the `/version` resource/method was never created.
+- **Path typo or trailing slash** mismatch.
+
+**Fix:** First, list what's actually deployed and compare against the URL you're calling:
+
+```bash
+REGION=us-east-1
+API_ID=<your-api-id>
+
+# Every resource path + the methods defined on it:
+aws apigateway get-resources --rest-api-id $API_ID --region $REGION \
+  --query 'items[].{path:path,methods:keys(resourceMethods)}' --output table
+
+# Confirm the prod stage exists and has a deployment:
+aws apigateway get-stages --rest-api-id $API_ID --region $REGION \
+  --query 'item[].{stage:stageName,deployment:deploymentId}' --output table
+```
+
+- Path **not listed** → wrong path, or create the resource/method and **redeploy**.
+- Path listed but **missing your verb** → add/deploy that method.
+- Looks right but stage is missing or `deploymentId` is stale → **Deploy API → prod** again.
+
+Then call the full URL: `https://<id>.execute-api.us-east-1.amazonaws.com/prod/quotes`.
+
+> This is a *routing* error — distinct from `500 Internal server error`, which is the Lambda
+> **alias-permission** issue above. A `403` here means routing; a `500` means the route matched
+> but invoking the alias failed.
 
 ---
 

@@ -192,6 +192,10 @@ no NAT Gateway or ALB ticking in the background.
 
 ## What's Next
 
+- Ship new versions safely with **rolling, canary, and blue-green** deployments — see
+  **[deployment-strategies.md](deployment-strategies.md)** (native Lambda alias + API Gateway
+  techniques, no CodeDeploy). For a from-scratch walkthrough, do the dedicated
+  [API Gateway series](../README.md#api-gateway-series-beginner--intermediate).
 - Add a **DynamoDB** table so the app has state, and give the role `dynamodb:*` on just that table
 - Put the function **behind a custom domain** with API Gateway + ACM
 - Replace the zip deploy with **AWS SAM** or the **CDK** for infrastructure-as-code

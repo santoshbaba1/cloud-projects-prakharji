@@ -57,6 +57,23 @@ cloud architecture with monitoring, alerting, audit, and a GitHub Actions CI/CD 
 | 1 | [EC2 + VPC Monitored Web App](./ec2-vpc-monitored-webapp/README.md) | EC2, VPC, ALB, Auto Scaling, CloudWatch, SNS, CloudTrail, IAM, SSM, GitHub Actions | Full native architecture: custom VPC (public/private subnets, NAT), EC2 fleet behind an ALB with Auto Scaling, CloudWatch metrics/alarms/dashboards, SNS email alerts, CloudTrail audit, Boto3 monitoring automation, and an OIDC→SSM deploy pipeline |
 | 2 | [Serverless Monitored Web App](./serverless-monitored-webapp/README.md) | API Gateway, Lambda, CloudWatch, SNS, CloudTrail, IAM, GitHub Actions | The same app with no servers: API Gateway + Lambda, the same CloudWatch/SNS/CloudTrail observability, Boto3 automation, and an OIDC→`update-function-code` pipeline — with a side-by-side native-vs-serverless comparison |
 
+### API Gateway Series (Beginner → Intermediate)
+
+Two projects that build an API on **API Gateway + Lambda**, then teach the part most tutorials
+skip: **how to ship a new version safely.** Each covers **rolling**, **canary**, and
+**blue-green** deployments using only **native** Lambda + API Gateway primitives — no
+CodeDeploy — so you can see exactly what each strategy does. Build both to compare REST vs HTTP
+APIs and gateway-level vs alias-level deploys.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [API Gateway REST API + Lambda](./api-gateway-rest-lambda/README.md) | API Gateway (REST), Lambda, IAM, CloudWatch | Build a Quotes API with REST resources/methods + proxy integration and a deployment stage, then ship v2 three ways: **rolling** (weighted Lambda alias), **canary** (API Gateway's native gateway-level canary release), and **blue-green** (instant stage-variable flip + rollback) |
+| 2 | [API Gateway HTTP API + Lambda + DynamoDB](./api-gateway-http-dynamodb-crud/README.md) | API Gateway (HTTP), Lambda, DynamoDB, IAM, CloudWatch | Build a full CRUD Tasks API (GET/POST/PUT/DELETE) on the cheaper HTTP API with durable DynamoDB state, then do **rolling / canary / blue-green** entirely at the **Lambda-alias** level (HTTP API has no gateway canary) — repointing the integration for an atomic cutover |
+
+> The existing [Serverless Monitored Web App](./serverless-monitored-webapp/README.md) also
+> ships a [deployment-strategies.md](./serverless-monitored-webapp/deployment-strategies.md)
+> guide to apply these same techniques to that app.
+
 ---
 
 ## How This Repo Is Organized

@@ -1,6 +1,6 @@
 # AWS Hands-On Projects
 
-A collection of hands-on AWS projects designed for students to build real-world skills through guided, step-by-step exercises in their own AWS accounts.
+A collection of **20 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus one local Kubernetes lab.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.

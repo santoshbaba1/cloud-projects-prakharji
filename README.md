@@ -87,6 +87,19 @@ APIs and gateway-level vs alias-level deploys.
 > ships a [deployment-strategies.md](./serverless-monitored-webapp/deployment-strategies.md)
 > guide to apply these same techniques to that app.
 
+### Optimization & Recovery Series
+
+Three projects on one theme: **keeping cloud systems lean and resilient.** Two cover AWS, one
+covers Kubernetes. Each is hands-on, with a safety switch (`DRY_RUN` / verify-before-act) wherever
+something can change or delete infrastructure. Together they cover rightsizing compute,
+disaster-recovery for databases, and both halves at once on Kubernetes.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [EC2 Compute Rightsizing](./aws-compute-rightsizing/README.md) | Lambda, EventBridge, EC2, CloudWatch, SNS, Compute Optimizer | **Optimization.** A scheduled Lambda reads each instance's CloudWatch CPU, labels it idle/over-provisioned/right-sized, emails an SNS report, and (opt-in, tag-gated) resizes via stop→modify→start — then compares your logic to AWS Compute Optimizer |
+| 2 | [RDS Disaster Recovery](./rds-disaster-recovery/README.md) | RDS, EC2 (SG), KMS, two regions | **Recovery.** Seed a MySQL DB, then recover it four ways — point-in-time restore, manual snapshot, cross-region snapshot copy, and a cross-region read-replica failover — measuring RPO/RTO for each |
+| 3 | [Kubernetes Optimization & Recovery](./k8s-optimization-and-recovery/README.md) | kind/minikube, metrics-server, HPA, Velero, MinIO | **Both, on Kubernetes (local, $0).** Right-size with requests/limits, autoscale with an HPA, self-heal with probes + a PDB, then back up the namespace with Velero, delete it, and restore it |
+
 ---
 
 ## How This Repo Is Organized

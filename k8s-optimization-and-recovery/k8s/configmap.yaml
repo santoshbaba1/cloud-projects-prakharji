@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-data
+  namespace: webapp
+data:
+  # Mounted at /data/message.txt and read by GET /data. Acts as the "state"
+  # you'll back up with Velero and restore after deleting the namespace.
+  message.txt: "v1 — this value was captured by the Velero backup"

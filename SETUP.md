@@ -19,8 +19,9 @@ This guide installs every tool the projects in this repo use, with steps for **L
 | **Git** | Cloning this repo; GitHub Actions deploy steps | `git --version` |
 | **A code editor** (VS Code) | Reading/editing files (recommended, optional) | opens `.md` and `.py` files |
 | **curl** | Testing endpoints in many steps | `curl --version` |
-| **Docker + Docker Compose** | **ECS/Fargate projects only** (containers) | `docker --version`, `docker compose version` |
+| **Docker + Docker Compose** | **ECS/Fargate projects + the Kubernetes project** (containers) | `docker --version`, `docker compose version` |
 | **zip** | Serverless Lambda packaging (deploy steps) | `zip --version` |
+| **kubectl + kind/minikube + Velero** | **Kubernetes Optimization & Recovery project only** | `kubectl version --client`, `kind version`/`minikube version`, `velero version --client-only` |
 | **AWS SAM CLI** | *Optional* — one serverless challenge only | `sam --version` |
 
 Python libraries (`boto3`, `flask`, `gunicorn`) install **per project** with
@@ -228,7 +229,8 @@ pip install boto3                       # for scripts/setup_monitoring.py
 |---------|---------|-------|
 | `flask` | EC2 web app (`src/app.py`) | The web framework |
 | `gunicorn` | EC2 web app on the **server** | ⚠️ Unix-only — won't `pip install`/run on native Windows. The EC2 instance (Linux) runs it; on a Windows laptop just run `python app.py` to test locally, or use WSL2. |
-| `boto3` | `setup_monitoring.py` in both web app projects | AWS SDK for Python |
+| `boto3` | `setup_monitoring.py` in both web app projects; the Compute Rightsizing Lambda's local invoke | AWS SDK for Python |
+| `pymysql` | RDS Disaster Recovery (`src/db_seed.py`, `src/db_verify.py`) | Pure-Python MySQL client; `pip install pymysql` |
 
 > The **serverless** project's handler needs **no libraries at all** to run its
 > `test_app.py` — it's pure standard-library Python. Just `python test_app.py`.
@@ -245,6 +247,53 @@ pip install boto3                       # for scripts/setup_monitoring.py
 
 `curl` is preinstalled on macOS, modern Windows 10/11, and most Linux distros (Ubuntu:
 `sudo apt install curl` if missing).
+
+---
+
+## 9. Kubernetes Tooling — *Kubernetes project only*
+
+Skip this unless you're doing `k8s-optimization-and-recovery`. It runs a **local** Kubernetes
+cluster on your laptop (no AWS, no cost) and needs Docker (section 6) running first. Install
+**kubectl**, **one** of kind/minikube, and the **Velero** CLI.
+
+### kubectl (all platforms)
+```bash
+# Linux
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# macOS
+brew install kubectl
+
+# Windows
+winget install Kubernetes.kubectl
+
+kubectl version --client
+```
+
+### kind *or* minikube (pick one — kind is lightest)
+```bash
+# kind (Kubernetes IN Docker)
+brew install kind                                  # macOS
+go install sigs.k8s.io/kind@latest                 # any OS with Go
+winget install Kubernetes.kind                     # Windows
+
+# minikube (alternative)
+brew install minikube                              # macOS
+winget install Kubernetes.minikube                 # Windows
+# Linux: https://minikube.sigs.k8s.io/docs/start/
+```
+
+### Velero CLI (backup/restore, Step 6)
+```bash
+brew install velero                                # macOS
+# Linux/Windows: download a release from https://github.com/vmware-tanzu/velero/releases
+velero version --client-only
+```
+
+> The project installs the **Velero server** and **MinIO** *inside* the cluster via `velero
+> install` and a manifest — you only need the **Velero CLI** on your laptop. Everything else is
+> pulled as container images at run time.
 
 ---
 

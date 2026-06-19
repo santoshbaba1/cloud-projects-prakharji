@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-generator
+  namespace: webapp
+spec:
+  # A short-lived pod that hammers /burn to push CPU above the HPA threshold.
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: load
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "generating load for ~3 minutes..."
+              end=$(( $(date +%s) + 180 ))
+              while [ $(date +%s) -lt $end ]; do
+                wget -q -O /dev/null "http://webapp.webapp.svc.cluster.local/burn?ms=400" || true
+              done
+              echo "done"

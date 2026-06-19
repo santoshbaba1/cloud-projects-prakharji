@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: webapp:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          # --- Optimization: requests = scheduling guarantee, limits = hard ceiling ---
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          # --- Recovery: probes make Kubernetes self-heal unhealthy pods ---
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: appdata
+              mountPath: /data
+      volumes:
+        - name: appdata
+          configMap:
+            name: webapp-data

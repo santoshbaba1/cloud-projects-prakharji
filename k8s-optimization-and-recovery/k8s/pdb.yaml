@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: webapp
+  namespace: webapp
+spec:
+  # During voluntary disruptions (node drain, upgrade) keep at least 1 pod serving.
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: webapp

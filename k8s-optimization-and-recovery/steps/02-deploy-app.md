@@ -17,6 +17,14 @@ docker build -t webapp:1.0 .
 A local cluster runs in its own container/VM and **can't see images in your laptop's Docker**
 unless you load them in. This is the #1 beginner snag (`ImagePullBackOff`).
 
+**Run only the one command that matches the cluster you created in Step 1** — then continue to 2.3.
+
+| Step 1 choice | What to run |
+|---------------|-------------|
+| **kind** | `kind load docker-image webapp:1.0 --name optrec` |
+| **minikube** | `minikube image load webapp:1.0 --profile optrec` |
+| **Docker Desktop** | *Nothing — skip to 2.3.* See note below. |
+
 ### kind
 
 ```bash
@@ -36,11 +44,15 @@ you just built with `docker build` is **already visible to the cluster**. There 
 **skip straight to 2.3**. (The `kind load` command does not apply here: that cluster is managed by
 Docker Desktop, not the `kind` CLI, so there's no `optrec` cluster to load into.)
 
-The Deployment uses `imagePullPolicy: IfNotPresent` so the cluster uses this loaded image instead
-of trying to pull `webapp:1.0` from a registry.
+### Why this works — applies to all three paths
 
-> **If pods show `ImagePullBackOff` / `ErrImageNeverPull`:** change `imagePullPolicy` in
-> `k8s/deployment.yaml` to `Never` (use only the local image, never pull) and re-apply.
+Whichever path you took, the Deployment sets `imagePullPolicy: IfNotPresent` so the cluster uses
+the **local** `webapp:1.0` image (loaded, or already present on Docker Desktop) instead of trying
+to pull it from a registry it doesn't exist in.
+
+> **If pods show `ImagePullBackOff` / `ErrImageNeverPull`** (any cluster type): change
+> `imagePullPolicy` in `k8s/deployment.yaml` to `Never` (use only the local image, never pull)
+> and re-apply.
 
 ---
 
@@ -95,7 +107,7 @@ Remember it — in Step 6 you'll delete everything and prove Velero brings it ba
 - [ ] `docker build` produced `webapp:1.0`
 - [ ] The image was **loaded into** the cluster (kind/minikube), not just built locally
 - [ ] Two `webapp` pods are **Running / 1/1**
-- [ ] `curl localhost:8080/` returns JSON and rotates pod names across calls
+- [ ] `curl localhost:8080/` returns JSON (the `pod` name stays fixed under port-forward — see the 2.4 note)
 - [ ] `/data` returns the ConfigMap message
 
 ---

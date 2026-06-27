@@ -1,6 +1,6 @@
 # AWS Hands-On Projects
 
-A collection of **20 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus one local Kubernetes lab.
+A collection of **23 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus local Kubernetes labs.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
@@ -99,6 +99,20 @@ disaster-recovery for databases, and both halves at once on Kubernetes.
 | 1 | [EC2 Compute Rightsizing](./aws-compute-rightsizing/README.md) | Lambda, EventBridge, EC2, CloudWatch, SNS, Compute Optimizer | **Optimization.** A scheduled Lambda reads each instance's CloudWatch CPU, labels it idle/over-provisioned/right-sized, emails an SNS report, and (opt-in, tag-gated) resizes via stop→modify→start — then compares your logic to AWS Compute Optimizer |
 | 2 | [RDS Disaster Recovery](./rds-disaster-recovery/README.md) | RDS, EC2 (SG), KMS, two regions | **Recovery.** Seed a MySQL DB, then recover it four ways — point-in-time restore, manual snapshot, cross-region snapshot copy, and a cross-region read-replica failover — measuring RPO/RTO for each |
 | 3 | [Kubernetes Optimization & Recovery](./k8s-optimization-and-recovery/README.md) | kind/minikube, metrics-server, HPA, Velero, MinIO | **Both, on Kubernetes (local, $0).** Right-size with requests/limits, autoscale with an HPA, self-heal with probes + a PDB, then back up the namespace with Velero, delete it, and restore it |
+
+### Migration Series
+
+Three projects on one theme: **moving a workload from one architecture to a better-fit one**,
+each mapped to AWS's **6 R's** (Refactor, Refactor, Replatform) and driven by the **Strangler
+Fig** / **full-load + CDC** patterns. Every step is manual (Console + CLI) so you see each moving
+part. Each README spells out *why* the target architecture is better, *what type* of migration it
+is, and *which principles* apply.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [Monolith → Serverless](./monolith-to-serverless-migration/README.md) | EC2, Lambda, API Gateway (HTTP), DynamoDB, IAM | **Refactor.** Run a Flask + SQLite monolith on EC2, then strangle it route-by-route into two domain Lambdas (catalog/orders) + DynamoDB behind an HTTP API — migrating data and traffic with no big-bang cutover, then retire the EC2 box |
+| 2 | [Monolith → Microservices on EKS](./monolith-to-microservices-eks/README.md) | EKS, ECR, ELB, EC2, IAM | **Refactor.** Decompose a single container into `catalog`/`orders`/`frontend` microservices on Kubernetes — service-to-service DNS, ConfigMaps, probes, **HPA**, rolling updates, self-healing — then cut over from the monolith. ⚠️ Real EKS cost; $0 local `kind` alternative included |
+| 3 | [Database Migration with DMS](./database-migration-dms/README.md) | DMS, RDS (MySQL), EC2, VPC, IAM | **Replatform.** Migrate a live self-managed MySQL to managed RDS with **full load + CDC** for near-zero downtime — replication instance, endpoints, validation, and a clean parity-checked cutover (RPO/RTO) |
 
 ---
 

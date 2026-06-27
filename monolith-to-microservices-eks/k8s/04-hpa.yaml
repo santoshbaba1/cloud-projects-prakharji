@@ -1,0 +1,22 @@
+# Horizontal Pod Autoscaler for catalog — scale 2..6 pods at 50% CPU.
+# Requires metrics-server in the cluster (Step 6). This is per-service elasticity:
+# catalog scales on its OWN load without touching orders or frontend.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: catalog
+  namespace: shop
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: catalog
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50

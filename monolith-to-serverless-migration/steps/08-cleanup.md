@@ -1,0 +1,77 @@
+# Step 8 — Cleanup
+
+Tear everything down so nothing bills you. Work top-down: front door → functions → data →
+roles → any leftover compute. If you already terminated the EC2 instance in Step 7, skip that
+part.
+
+---
+
+## 8.1 Delete the HTTP API
+
+**API Gateway → APIs → `bookstore-api` → Actions → Delete.**
+
+```bash
+API_ID=$(aws apigatewayv2 get-apis --query "Items[?Name=='bookstore-api'].ApiId" --output text)
+aws apigatewayv2 delete-api --api-id "$API_ID"
+```
+
+## 8.2 Delete the Lambda functions
+
+```bash
+aws lambda delete-function --function-name bookstore-catalog
+aws lambda delete-function --function-name bookstore-orders
+```
+
+## 8.3 Delete the DynamoDB tables
+
+> Only after you've confirmed you don't need the data (Step 7 snapshot covers you).
+
+```bash
+aws dynamodb delete-table --table-name Books
+aws dynamodb delete-table --table-name Orders
+```
+
+## 8.4 Delete the IAM roles
+
+Delete inline policies first, then the roles:
+
+```bash
+aws iam delete-role-policy --role-name BookstoreCatalogRole --policy-name CatalogBooksRead
+aws iam detach-role-policy --role-name BookstoreCatalogRole \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+aws iam delete-role --role-name BookstoreCatalogRole
+
+aws iam delete-role-policy --role-name BookstoreOrdersRole --policy-name OrdersTablesAccess
+aws iam detach-role-policy --role-name BookstoreOrdersRole \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+aws iam delete-role --role-name BookstoreOrdersRole
+```
+
+## 8.5 EC2 + extras
+
+- **Terminate** `bookstore-monolith` if you haven't (Step 7).
+- Delete the **security group** you created for it (once the instance is gone).
+- Delete the CloudWatch log groups `/aws/lambda/bookstore-catalog` and
+  `/aws/lambda/bookstore-orders` if you want a clean slate.
+- Empty/delete the **S3 snapshot** object/bucket from Step 7 if you no longer need it.
+- Deregister the **AMI** and delete its snapshot if you made one.
+
+```bash
+aws logs delete-log-group --log-group-name /aws/lambda/bookstore-catalog
+aws logs delete-log-group --log-group-name /aws/lambda/bookstore-orders
+```
+
+---
+
+## Checkpoint
+
+- [ ] `bookstore-api` deleted
+- [ ] Both Lambda functions deleted
+- [ ] `Books` and `Orders` tables deleted
+- [ ] Both IAM roles (and their inline policies) deleted
+- [ ] EC2 instance terminated; its security group removed
+- [ ] Log groups / S3 snapshot / AMI cleaned up
+- [ ] **Billing → Cost Explorer** shows nothing from this project tomorrow
+
+You migrated a monolith to serverless with the Strangler Fig pattern — and left no trace
+behind. 🎉

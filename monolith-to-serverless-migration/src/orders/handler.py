@@ -1,0 +1,51 @@
+"""bookstore-orders Lambda — the orders slice of the strangled monolith.
+
+Handles the write/order routes:
+    POST /orders        -> create order
+    GET  /orders/{id}   -> one order
+
+Backed by the DynamoDB 'Orders' table. It validates the book exists by reading
+the 'Books' table (catalog), which is why its role gets read access to Books too.
+"""
+
+import json
+import os
+import uuid
+
+import boto3
+
+ORDERS_TABLE = os.environ.get("ORDERS_TABLE", "Orders")
+BOOKS_TABLE = os.environ.get("BOOKS_TABLE", "Books")
+APP_VERSION = os.environ.get("APP_VERSION", "orders-1.0")
+
+_ddb = boto3.resource("dynamodb")
+_orders = _ddb.Table(ORDERS_TABLE)
+_books = _ddb.Table(BOOKS_TABLE)
+
+
+def _resp(status, body):
+    return {"statusCode": status, "headers": {"content-type": "application/json"},
+            "body": json.dumps(body, default=str)}
+
+
+def handler(event, context):
+    method = event["requestContext"]["http"]["method"]
+    order_id = (event.get("pathParameters") or {}).get("id")
+
+    if method == "GET" and order_id:
+        item = _orders.get_item(Key={"id": order_id}).get("Item")
+        return _resp(200, item) if item else _resp(404, {"error": "not found"})
+
+    if method == "POST":
+        body = json.loads(event.get("body") or "{}")
+        if not _books.get_item(Key={"id": body.get("book_id", "")}).get("Item"):
+            return _resp(400, {"error": "unknown book_id"})
+        new_id = str(uuid.uuid4())
+        _orders.put_item(Item={
+            "id": new_id, "book_id": body["book_id"],
+            "qty": int(body.get("qty", 1)), "status": "PLACED",
+            "version": APP_VERSION,
+        })
+        return _resp(201, {"id": new_id, "status": "PLACED"})
+
+    return _resp(405, {"error": f"{method} not supported"})

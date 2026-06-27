@@ -1,0 +1,47 @@
+# catalog microservice — Deployment + internal Service.
+# Replace <account> with your AWS account id (ECR image URI).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+  namespace: shop
+  labels: { app: catalog }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: catalog }
+  template:
+    metadata:
+      labels: { app: catalog }
+    spec:
+      containers:
+        - name: catalog
+          image: <account>.dkr.ecr.us-east-1.amazonaws.com/shop-catalog:1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_VERSION
+              value: catalog-1.0
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits:   { cpu: "250m", memory: "256Mi" }
+          readinessProbe:
+            httpGet: { path: /health, port: 8080 }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /health, port: 8080 }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog          # DNS: catalog.shop.svc.cluster.local
+  namespace: shop
+spec:
+  selector: { app: catalog }
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP        # internal only

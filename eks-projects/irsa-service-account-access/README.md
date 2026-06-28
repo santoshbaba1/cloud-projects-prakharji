@@ -148,7 +148,7 @@ sequenceDiagram
     STS-->>Role: All checks pass → mint credentials
     Role-->>SDK: Temporary AWS credentials (15 min – 1 hr)
     SDK->>STS: (later) calls S3 with those creds
-    Note over Pod,Role: ❌ No access key was ever stored.<br/>Token auto-rotates; creds auto-refresh.
+    Note over Pod,Role: ❌ No access key was ever stored.<br/>Token auto-rotates, creds auto-refresh.
 ```
 
 **Read it:** The pod never sees a permanent key. EKS injects a fresh signed token; the SDK swaps it

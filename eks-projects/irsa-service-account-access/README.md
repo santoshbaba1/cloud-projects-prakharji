@@ -133,11 +133,11 @@ the above.
 
 ```mermaid
 sequenceDiagram
-    participant Pod as Pod (uses SA s3-reader)
+    participant Pod as Pod uses SA s3-reader
     participant Hook as EKS Pod Identity Webhook
     participant SDK as AWS SDK in the pod
     participant STS as AWS STS
-    participant OIDC as Cluster OIDC provider (in IAM)
+    participant OIDC as Cluster OIDC provider in IAM
     participant Role as IAM role IrsaS3ReaderRole
 
     Pod->>Hook: Pod scheduled with annotated SA

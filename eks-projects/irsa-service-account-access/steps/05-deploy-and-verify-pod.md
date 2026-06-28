@@ -9,7 +9,7 @@ with **temporary, auto-injected credentials** — no keys anywhere.
 
 ```mermaid
 sequenceDiagram
-    participant Pod as Pod irsa-test (SA s3-reader)
+    participant Pod as Pod irsa-test uses SA s3-reader
     participant Hook as EKS Pod Identity Webhook
     participant SDK as aws-cli in the pod
     participant STS as AWS STS

@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: apps
+  name: team-a-developer-binding
+subjects:
+  # This name must match the Kubernetes group you mapped the IAM principal to
+  # in the EKS access entry (see Step 6).
+  - kind: Group
+    name: team-a-devs
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: team-a-developer
+  apiGroup: rbac.authorization.k8s.io

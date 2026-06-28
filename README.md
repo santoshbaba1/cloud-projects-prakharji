@@ -1,6 +1,6 @@
 # AWS Hands-On Projects
 
-A collection of **23 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus local Kubernetes labs.
+A collection of **24 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus local Kubernetes labs.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
@@ -113,6 +113,17 @@ is, and *which principles* apply.
 | 1 | [Monolith → Serverless](./monolith-to-serverless-migration/README.md) | EC2, Lambda, API Gateway (HTTP), DynamoDB, IAM | **Refactor.** Run a Flask + SQLite monolith on EC2, then strangle it route-by-route into two domain Lambdas (catalog/orders) + DynamoDB behind an HTTP API — migrating data and traffic with no big-bang cutover, then retire the EC2 box |
 | 2 | [Monolith → Microservices on EKS](./monolith-to-microservices-eks/README.md) | EKS, ECR, ELB, EC2, IAM | **Refactor.** Decompose a single container into `catalog`/`orders`/`frontend` microservices on Kubernetes — service-to-service DNS, ConfigMaps, probes, **HPA**, rolling updates, self-healing — then cut over from the monolith. ⚠️ Real EKS cost; $0 local `kind` alternative included |
 | 3 | [Database Migration with DMS](./database-migration-dms/README.md) | DMS, RDS (MySQL), EC2, VPC, IAM | **Replatform.** Migrate a live self-managed MySQL to managed RDS with **full load + CDC** for near-zero downtime — replication instance, endpoints, validation, and a clean parity-checked cutover (RPO/RTO) |
+
+### EKS Projects
+
+Projects in the [`eks-projects/`](./eks-projects/README.md) directory focus on **Amazon EKS**
+security, identity, and operations. ⚠️ Each runs a real EKS control plane (**$0.10/hr**, no free
+tier) — delete the cluster the same day. New to Kubernetes? Do the free local lab in
+[k8s-optimization-and-recovery](./k8s-optimization-and-recovery/README.md) first.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [IRSA — Service Account Access](./eks-projects/irsa-service-account-access/README.md) | EKS, IAM, STS, OIDC, S3 | Give a pod AWS permissions via a ServiceAccount with **IRSA** (OIDC trust, zero stored keys) end-to-end — cluster OIDC provider, trust + permission policies, SA annotation, verified pod — then scope a teammate to one namespace with **RBAC + access entries**. Rich diagrams explaining *what OIDC/IRSA/ServiceAccounts are* and the full creation flow |
 
 ---
 

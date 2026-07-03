@@ -1,6 +1,6 @@
-# AWS Hands-On Projects
+# Cloud Hands-On Projects
 
-A collection of **24 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus local Kubernetes labs.
+A collection of **26 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus a pair of Google Cloud networking labs and local Kubernetes labs.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
@@ -125,6 +125,17 @@ tier) — delete the cluster the same day. New to Kubernetes? Do the free local 
 |---|---------|----------|-------------|
 | 1 | [IRSA — Service Account Access](./eks-projects/irsa-service-account-access/README.md) | EKS, IAM, STS, OIDC, S3 | Give a pod AWS permissions via a ServiceAccount with **IRSA** (OIDC trust, zero stored keys) end-to-end — cluster OIDC provider, trust + permission policies, SA annotation, verified pod — then scope a teammate to one namespace with **RBAC + access entries**. Rich diagrams explaining *what OIDC/IRSA/ServiceAccounts are* and the full creation flow |
 
+### GCP Networking Projects
+
+The two projects in the [`gcp-projects/`](./gcp-projects/README.md) directory are the repo's
+**Google Cloud** labs — networking on GCP instead of AWS. Each step has both a **Console** and a
+**gcloud CLI** path. New to GCP? The beginner project's Step 1 installs and authenticates the CLI.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [VPC & Firewall Basics](./gcp-projects/gcp-vpc-firewall-basics/README.md) | VPC, Subnets, Firewall, Compute Engine | **Beginner.** Install & authenticate the gcloud CLI, then build a custom VPC with two subnets, three firewall rules, and two VMs — and prove it works with SSH, private ping, a web page, and watching the firewall block unopened ports |
+| 2 | [HTTP Load Balancer & Autoscaling](./gcp-projects/gcp-http-lb-autoscaling/README.md) | VPC, Cloud NAT, Instance Templates, MIG, Health Checks, Application LB | **Intermediate.** Put **private** autoscaling VMs behind a **global HTTP load balancer** with Cloud NAT for egress, then load-test to scale out and delete a VM to watch the managed instance group self-heal |
+
 ---
 
 ## How This Repo Is Organized
@@ -147,11 +158,13 @@ project-name/
 
 ## Prerequisites (All Projects)
 
-- An active AWS account with console access
+- An active AWS account with console access (or, for the [GCP projects](./gcp-projects/README.md), a
+  Google Cloud account with billing linked)
 - A user or role with sufficient permissions (each project specifies exactly what's needed)
-- Basic familiarity with the AWS Management Console
+- Basic familiarity with the AWS Management Console (the GCP projects assume none — they start by
+  installing the `gcloud` CLI)
 - The required tooling installed on your laptop — see **[SETUP.md](SETUP.md)** for
-  AWS CLI, Python, Git, Docker, and more, with **Linux / macOS / Windows** instructions
+  AWS CLI, gcloud CLI, Python, Git, Docker, and more, with **Linux / macOS / Windows** instructions
 
 ## Contributing a New Project
 

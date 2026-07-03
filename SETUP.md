@@ -14,7 +14,8 @@ This guide installs every tool the projects in this repo use, with steps for **L
 | Tool | Required for | Verify it's installed |
 |------|--------------|------------------------|
 | **AWS account + credentials** | Every project (it all runs in AWS) | `aws sts get-caller-identity` |
-| **AWS CLI v2** | Every project (the `aws ...` commands) | `aws --version` → `aws-cli/2.x` |
+| **AWS CLI v2** | Every AWS project (the `aws ...` commands) | `aws --version` → `aws-cli/2.x` |
+| **gcloud CLI** | **GCP projects only** (`gcp-projects/`) | `gcloud --version` → `Google Cloud SDK` |
 | **Python 3.12+ & pip** | App code, `test_app.py`, Boto3 automation | `python3 --version`, `pip3 --version` |
 | **Git** | Cloning this repo; GitHub Actions deploy steps | `git --version` |
 | **A code editor** (VS Code) | Reading/editing files (recommended, optional) | opens `.md` and `.py` files |
@@ -97,6 +98,37 @@ aws --version
 ```
 
 > Must say `aws-cli/2.x`. If you have an old `1.x`, upgrade — some commands differ.
+
+---
+
+## 2b. gcloud CLI — *GCP projects only*
+
+Only needed for the two projects under [`gcp-projects/`](gcp-projects/README.md). If you're doing the
+AWS projects, skip this.
+
+### Linux
+
+```bash
+curl -sSL https://sdk.cloud.google.com | bash
+exec -l $SHELL          # restart the shell so `gcloud` is on PATH
+gcloud --version
+```
+
+### macOS
+
+```bash
+brew install --cask google-cloud-sdk
+gcloud --version
+```
+
+### Windows
+
+Download and run the installer from https://cloud.google.com/sdk/docs/install#windows (it adds
+`gcloud` to PATH). Then verify in a new terminal: `gcloud --version`.
+
+> **Full walkthrough** — logging in (`gcloud auth login`), creating a project, linking billing, and
+> enabling the Compute Engine API — is **Step 1** of the beginner GCP project:
+> [gcp-vpc-firewall-basics/steps/01-install-gcloud.md](gcp-projects/gcp-vpc-firewall-basics/steps/01-install-gcloud.md).
 
 ---
 

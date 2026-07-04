@@ -19,7 +19,7 @@ build, test, troubleshoot, and tear down. Keep it practical.
 2. **Name the folder** per the rules below.
 3. **Copy the templates** and fill them in.
 4. **Add an entry** to [PROJECT-CATALOG.md](PROJECT-CATALOG.md) (until catalog generation is
-   automated in Phase 5).
+   automated).
 
 ### Folder naming rules
 

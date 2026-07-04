@@ -1,5 +1,22 @@
 # Monolith → Microservices on Kubernetes (ECS Fargate monolith → Amazon EKS)
 
+```yaml
+level: advanced
+cloud: kubernetes
+domain: migration
+technology:
+  - eks
+  - ecr
+  - elb
+  - ec2
+  - iam
+estimated_time: 3-4 hours
+estimated_cost: hourly
+deployment_type: eksctl + kubectl
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You start with the **shop monolith**: one Flask container that serves catalog, orders, *and*

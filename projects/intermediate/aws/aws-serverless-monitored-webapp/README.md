@@ -1,5 +1,24 @@
 # Serverless Monitored Web App — The Same App, No Servers
 
+```yaml
+level: intermediate
+cloud: aws
+domain: serverless
+technology:
+  - api-gateway
+  - lambda
+  - cloudwatch
+  - sns
+  - cloudtrail
+  - iam
+  - github-actions
+estimated_time: 2-3 hours
+estimated_cost: low
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 This is the **serverless twin** of the

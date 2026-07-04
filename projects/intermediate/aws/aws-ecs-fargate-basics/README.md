@@ -1,5 +1,22 @@
 # ECS Fargate Basics — Run Your First Container on AWS
 
+```yaml
+level: intermediate
+cloud: aws
+domain: containers
+technology:
+  - ecs
+  - fargate
+  - ecr
+  - iam
+  - cloudwatch
+estimated_time: 90 min
+estimated_cost: low
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will containerize a simple Python Flask application, push the Docker image to **Amazon ECR Public**, and run it as a task on **Amazon ECS with Fargate**. By the end of this project you will understand:

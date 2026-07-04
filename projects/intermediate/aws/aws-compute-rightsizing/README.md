@@ -1,5 +1,23 @@
 # EC2 Compute Rightsizing — Find & Fix Wasted Capacity
 
+```yaml
+level: intermediate
+cloud: aws
+domain: cost-optimization
+technology:
+  - lambda
+  - eventbridge
+  - ec2
+  - cloudwatch
+  - sns
+  - compute-optimizer
+estimated_time: 90 min
+estimated_cost: low
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 **Optimization & Recovery Series — Project 1 of 3**
 
 ## What You'll Build

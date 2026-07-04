@@ -1,5 +1,22 @@
 # Scheduled EC2 Start/Stop — Save Money on Idle Instances
 
+```yaml
+level: beginner
+cloud: aws
+domain: cost-optimization
+technology:
+  - lambda
+  - eventbridge
+  - ec2
+  - iam
+  - cloudwatch
+estimated_time: 60 min
+estimated_cost: low
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 **Lambda Automation Series — Project 2 of 3**
 
 ## What You'll Build

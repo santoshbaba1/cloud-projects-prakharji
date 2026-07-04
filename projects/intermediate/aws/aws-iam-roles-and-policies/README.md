@@ -1,5 +1,22 @@
 # IAM Roles & Policies — Trust, AssumeRole, and Service Roles
 
+```yaml
+level: intermediate
+cloud: aws
+domain: security-iam
+technology:
+  - iam
+  - sts
+  - lambda
+  - ec2
+  - ecs
+estimated_time: 90 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 This project is a hands-on tour of **IAM Roles** — the part of AWS that confuses almost everyone at first. Instead of building one app, you build **six different roles**, each for a different real-world job, and you learn *why* each one works the way it does.

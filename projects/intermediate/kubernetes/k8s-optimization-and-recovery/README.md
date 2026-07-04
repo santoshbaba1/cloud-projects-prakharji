@@ -1,5 +1,22 @@
 # Kubernetes Optimization & Recovery — Right-Size, Autoscale, Back Up, Restore
 
+```yaml
+level: intermediate
+cloud: kubernetes
+domain: sre
+technology:
+  - kind
+  - metrics-server
+  - hpa
+  - velero
+  - minio
+estimated_time: 2-3 hours
+estimated_cost: free-tier
+deployment_type: kubectl
+cleanup_required: true
+status: ready
+```
+
 **Optimization & Recovery Series — Project 3 of 3**
 
 ## What You'll Build

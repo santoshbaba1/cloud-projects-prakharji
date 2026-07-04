@@ -1,5 +1,25 @@
 # ECS Fargate Advanced — Production-Grade Container Deployment
 
+```yaml
+level: advanced
+cloud: aws
+domain: containers
+technology:
+  - ecs
+  - fargate
+  - ecr
+  - alb
+  - vpc
+  - iam
+  - cloudwatch
+  - auto-scaling
+estimated_time: 3 hours
+estimated_cost: hourly
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will deploy a production-ready containerized Python Flask application on **Amazon ECS with Fargate**, fronted by an **Application Load Balancer (ALB)**, with **Auto Scaling**, **CloudWatch Container Insights**, and proper **VPC networking**. Every IAM permission is explicitly defined and explained.

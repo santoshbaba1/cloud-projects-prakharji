@@ -1,5 +1,20 @@
 # Event-Driven Messaging with SNS & SQS
 
+```yaml
+level: beginner
+cloud: aws
+domain: messaging
+technology:
+  - sns
+  - sqs
+  - iam
+estimated_time: 45 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will build an **order notification system** that uses the SNS fanout pattern — a common real-world architecture used by e-commerce platforms, logistics systems, and microservices.

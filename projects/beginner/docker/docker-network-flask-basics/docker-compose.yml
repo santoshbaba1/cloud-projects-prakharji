@@ -1,0 +1,26 @@
+# Compose does for you, in one file, what Steps 3–4 do by hand:
+# it creates a user-defined network and attaches every service to it, so
+# services resolve each other by SERVICE NAME (here `backend`) via Docker DNS.
+# (Modern Compose v2 needs no top-level `version:` key.)
+
+services:
+  backend:
+    build: ./src/backend
+    image: flask-net-backend:1.0
+    container_name: backend
+    # No `ports:` — the backend is reachable only *inside* the network, by name.
+    # Nothing on your host can hit it directly, which is exactly what we want.
+
+  frontend:
+    build: ./src/frontend
+    image: flask-net-frontend:1.0
+    container_name: frontend
+    environment:
+      BACKEND_URL: http://backend:5000
+    ports:
+      - "8080:8080"        # only the frontend is published to the host
+    depends_on:
+      - backend
+
+# No `networks:` block needed: Compose auto-creates a default user-defined
+# bridge network named `<project>_default` and joins both services to it.

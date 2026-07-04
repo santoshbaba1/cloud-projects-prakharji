@@ -20,7 +20,8 @@ CHECK = "--check" in sys.argv[1:]
 CATALOG = os.path.join(REPO, "PROJECT-CATALOG.md")
 
 COST_ICON = {"free-tier": "🟢", "low": "🟡", "hourly": "🔴"}
-CLOUD_LABEL = {"aws": "AWS", "gcp": "GCP", "azure": "Azure", "kubernetes": "Kubernetes"}
+CLOUD_LABEL = {"aws": "AWS", "gcp": "GCP", "azure": "Azure", "kubernetes": "Kubernetes",
+               "docker": "Docker"}
 LEVEL_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 # recommended display order (path suffix -> order); anything unlisted sorts after, by level
 ORDER = [
@@ -34,6 +35,7 @@ ORDER = [
     "aws-monolith-to-serverless-migration", "aws-database-migration-dms",
     "eks-monolith-to-microservices", "eks-irsa-service-account-access",
     "k8s-optimization-and-recovery", "gcp-vpc-firewall-basics", "gcp-http-lb-autoscaling",
+    "docker-network-flask-basics",
 ]
 
 YAML_BLOCK = re.compile(r"```yaml\n(.*?)\n```", re.DOTALL)
@@ -144,7 +146,7 @@ def render(rows):
 
     # By cloud / tech
     out.append("## By cloud / technology\n")
-    for cl in ("aws", "gcp", "azure", "kubernetes"):
+    for cl in ("aws", "gcp", "azure", "kubernetes", "docker"):
         sel = [r for r in rows if r["cloud"] == cl]
         label = CLOUD_LABEL.get(cl, cl.title())
         out.append(f"### {label} Projects")

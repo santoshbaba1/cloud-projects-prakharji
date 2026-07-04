@@ -140,6 +140,15 @@ Step 1 installs and authenticates the CLI.
 | 1 | [VPC & Firewall Basics](projects/beginner/gcp/gcp-vpc-firewall-basics/README.md) | VPC, Subnets, Firewall, Compute Engine | **Beginner.** Install & authenticate the gcloud CLI, then build a custom VPC with two subnets, three firewall rules, and two VMs — and prove it works with SSH, private ping, a web page, and watching the firewall block unopened ports |
 | 2 | [HTTP Load Balancer & Autoscaling](projects/intermediate/gcp/gcp-http-lb-autoscaling/README.md) | VPC, Cloud NAT, Instance Templates, MIG, Health Checks, Application LB | **Intermediate.** Put **private** autoscaling VMs behind a **global HTTP load balancer** with Cloud NAT for egress, then load-test to scale out and delete a VM to watch the managed instance group self-heal |
 
+### Docker Projects
+
+Local, **$0** container labs (under `projects/*/docker/`) — no cloud account needed. Every step gives
+both raw `docker` commands and the Docker Compose equivalent.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [Networking Basics — Two Flask Containers](projects/beginner/docker/docker-network-flask-basics/README.md) | Docker, Docker Compose, Bridge Networks, Flask | **Beginner.** Run a `frontend` container that calls a `backend` by name — watch name resolution **fail** on the default bridge, **fix it** with a user-defined network (`docker network create`), then reproduce the whole thing with `docker compose`. Teaches bridge vs. user-defined networks and Docker's embedded DNS |
+
 ---
 
 ## How This Repo Is Organized

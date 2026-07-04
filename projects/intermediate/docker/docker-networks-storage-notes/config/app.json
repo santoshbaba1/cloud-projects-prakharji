@@ -1,0 +1,4 @@
+{
+  "title": "Team Notes",
+  "banner": "Loaded from a read-only bind mount — edit config/app.json on the host and restart the api to see this change."
+}

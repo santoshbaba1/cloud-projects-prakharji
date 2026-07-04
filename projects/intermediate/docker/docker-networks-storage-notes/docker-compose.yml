@@ -1,0 +1,45 @@
+# The Compose version of Steps 3–5. It declares, in one file, the two networks
+# (one of them `internal`), the named volume, the read-only bind mount, and the
+# tmpfs — exactly what you build by hand with raw `docker` commands earlier.
+# (Modern Compose v2 needs no top-level `version:` key.)
+
+services:
+  edge:
+    build: ./src/edge
+    image: notes-edge:1.0
+    container_name: edge
+    environment:
+      API_URL: http://api:5000
+    ports:
+      - "8080:8080"          # only the edge is published to the host
+    networks:
+      - frontend             # host-facing
+      - backend              # so it can reach the api
+    depends_on:
+      - api
+
+  api:
+    build: ./src/api
+    image: notes-api:1.0
+    container_name: api
+    environment:
+      DATA_DIR: /data
+      CONFIG_PATH: /config/app.json
+      CACHE_DIR: /cache
+    networks:
+      - backend              # internal only: no host port, no internet
+    volumes:
+      - notes-data:/data     # named volume -> persists across container removal
+      - ./config:/config:ro  # bind mount, read-only -> host-managed config
+    tmpfs:
+      - /cache               # tmpfs -> ephemeral scratch, gone on restart
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true           # no route to the outside world (egress blocked)
+
+volumes:
+  notes-data:                # survives `docker compose down`; removed only with `down -v`

@@ -148,6 +148,7 @@ both raw `docker` commands and the Docker Compose equivalent.
 | # | Project | Services | Description |
 |---|---------|----------|-------------|
 | 1 | [Networking Basics — Two Flask Containers](projects/beginner/docker/docker-network-flask-basics/README.md) | Docker, Docker Compose, Bridge Networks, Flask | **Beginner.** Run a `frontend` container that calls a `backend` by name — watch name resolution **fail** on the default bridge, **fix it** with a user-defined network (`docker network create`), then reproduce the whole thing with `docker compose`. Teaches bridge vs. user-defined networks and Docker's embedded DNS |
+| 2 | [Networks & Storage — Persistent Notes App](projects/intermediate/docker/docker-networks-storage-notes/README.md) | Docker, Docker Compose, Networks, Volumes, tmpfs, Flask | **Intermediate.** A public `edge` gateway fronts a private, stateful `api` across **two networks** (one `internal`, no egress). Prove the isolation, persist data to a **named volume** (survives container removal), use a **read-only bind mount** + **tmpfs**, and **back up / restore** the volume through simulated data loss |
 
 ---
 

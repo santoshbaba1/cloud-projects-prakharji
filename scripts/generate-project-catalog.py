@@ -35,7 +35,7 @@ ORDER = [
     "aws-monolith-to-serverless-migration", "aws-database-migration-dms",
     "eks-monolith-to-microservices", "eks-irsa-service-account-access",
     "k8s-optimization-and-recovery", "gcp-vpc-firewall-basics", "gcp-http-lb-autoscaling",
-    "docker-network-flask-basics",
+    "docker-network-flask-basics", "docker-networks-storage-notes",
 ]
 
 YAML_BLOCK = re.compile(r"```yaml\n(.*?)\n```", re.DOTALL)

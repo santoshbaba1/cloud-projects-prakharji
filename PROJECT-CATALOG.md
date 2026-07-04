@@ -39,6 +39,7 @@ The main navigation page for this repo. Pick a project by **level, cloud/tech, d
 | 25 | Beginner | GCP | networking | [GCP VPC & Firewall Basics](projects/beginner/gcp/gcp-vpc-firewall-basics/README.md) | 60 min | 🟢 | ✅ |
 | 26 | Intermediate | GCP | networking | [GCP HTTP Load Balancer & Autoscaling](projects/intermediate/gcp/gcp-http-lb-autoscaling/README.md) | 90 min | 🔴 | ✅ |
 | 27 | Beginner | Docker | networking | [Docker Networking Basics](projects/beginner/docker/docker-network-flask-basics/README.md) | 45-60 minutes | 🟢 | ✅ |
+| 28 | Intermediate | Docker | networking-storage | [Docker Networks & Storage](projects/intermediate/docker/docker-networks-storage-notes/README.md) | 75-90 minutes | 🟢 | ✅ |
 
 > 🔴 **Real-cost projects** (17, 18, 19, 21, 22, 23, 26): bill per hour with no free-tier umbrella. Do the cleanup step **the same day**.
 
@@ -48,7 +49,7 @@ The main navigation page for this repo. Pick a project by **level, cloud/tech, d
 1 Lambda Basics · 2 Lambda with S3 Event Processing · 3 Lambda Layers · 4 Lambda on a Schedule with EventBridge · 5 Scheduled EC2 Start/Stop · 6 Scheduled S3 Housekeeping · 7 S3 + CloudFront · 8 Event-Driven Messaging with SNS & SQS · 25 GCP VPC & Firewall Basics · 27 Docker Networking Basics
 
 ### Intermediate
-9 Lambda Triggered by SQS with SNS Notification · 10 Lambda Troubleshooting, Monitoring & Boto3 Automation · 11 IAM Roles & Policies · 12 API Gateway REST API + Lambda · 13 API Gateway HTTP API + Lambda + DynamoDB · 14 Serverless Monitored Web App · 15 EC2 Compute Rightsizing · 16 ECS Fargate Basics · 24 Kubernetes Optimization & Recovery · 26 GCP HTTP Load Balancer & Autoscaling
+9 Lambda Triggered by SQS with SNS Notification · 10 Lambda Troubleshooting, Monitoring & Boto3 Automation · 11 IAM Roles & Policies · 12 API Gateway REST API + Lambda · 13 API Gateway HTTP API + Lambda + DynamoDB · 14 Serverless Monitored Web App · 15 EC2 Compute Rightsizing · 16 ECS Fargate Basics · 24 Kubernetes Optimization & Recovery · 26 GCP HTTP Load Balancer & Autoscaling · 28 Docker Networks & Storage
 
 ### Advanced
 17 ECS Fargate Advanced · 18 EC2 + VPC Monitored Web App · 19 RDS Disaster Recovery · 20 Monolith → Serverless Migration · 21 Database Migration with AWS DMS · 22 Monolith → Microservices on Kubernetes · 23 IRSA
@@ -68,5 +69,5 @@ The main navigation page for this repo. Pick a project by **level, cloud/tech, d
 22 Monolith → Microservices on Kubernetes · 23 IRSA · 24 Kubernetes Optimization & Recovery
 
 ### Docker Projects
-27 Docker Networking Basics
+27 Docker Networking Basics · 28 Docker Networks & Storage
 

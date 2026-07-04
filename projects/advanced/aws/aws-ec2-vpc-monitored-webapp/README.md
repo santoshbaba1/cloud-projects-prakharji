@@ -1,5 +1,27 @@
 # EC2 + VPC Monitored Web App — A Full Cloud Network on Native AWS
 
+```yaml
+level: advanced
+cloud: aws
+domain: compute
+technology:
+  - ec2
+  - vpc
+  - alb
+  - auto-scaling
+  - cloudwatch
+  - sns
+  - cloudtrail
+  - iam
+  - ssm
+  - github-actions
+estimated_time: 3-4 hours
+estimated_cost: hourly
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will deploy a simple Python **Flask** web app onto **Amazon EC2** instances inside

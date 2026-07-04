@@ -18,8 +18,10 @@ build, test, troubleshoot, and tear down. Keep it practical.
    - Create the provider folder only if your project is the first to need it. **No empty folders.**
 2. **Name the folder** per the rules below.
 3. **Copy the templates** and fill them in.
-4. **Add an entry** to [PROJECT-CATALOG.md](PROJECT-CATALOG.md) (until catalog generation is
-   automated).
+4. **Fill in the YAML metadata block** at the top of your README (`level`, `cloud`, `domain`,
+   `technology`, `estimated_time`, `estimated_cost`, …), then regenerate the catalog:
+   `scripts/generate-project-catalog.py --write`. **Do not hand-edit `PROJECT-CATALOG.md`** — it is
+   generated from the metadata blocks.
 
 ### Folder naming rules
 
@@ -99,5 +101,5 @@ the README section).
 - [ ] No secrets / credentials / hardcoded account IDs
 - [ ] Least-privilege IAM, permissions explained
 - [ ] Validation/testing checklist included and verified
-- [ ] Entry added to [PROJECT-CATALOG.md](PROJECT-CATALOG.md)
+- [ ] README metadata block filled in and `scripts/generate-project-catalog.py --write` re-run
 - [ ] No unnecessary folders; no `assets/`; no `learning-paths/`

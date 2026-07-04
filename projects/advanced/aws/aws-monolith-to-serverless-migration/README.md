@@ -1,5 +1,22 @@
 # Monolith → Serverless Migration (EC2 Flask → API Gateway + Lambda + DynamoDB)
 
+```yaml
+level: advanced
+cloud: aws
+domain: migration
+technology:
+  - ec2
+  - lambda
+  - api-gateway
+  - dynamodb
+  - iam
+estimated_time: 3 hours
+estimated_cost: low
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You start with a **bookstore monolith**: one Flask app on a single **EC2** instance, talking

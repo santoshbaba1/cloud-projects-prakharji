@@ -1,5 +1,20 @@
 # Lambda Basics — Your First Serverless Function
 
+```yaml
+level: beginner
+cloud: aws
+domain: serverless
+technology:
+  - lambda
+  - iam
+  - cloudwatch
+estimated_time: 45-60 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will create, configure, test, and invoke your very first **AWS Lambda function** — entirely from the AWS Console and CLI. By the end of this project you will understand:

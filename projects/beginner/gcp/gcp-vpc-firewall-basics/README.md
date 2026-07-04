@@ -1,5 +1,21 @@
 # GCP VPC & Firewall Basics — Your First Custom Network
 
+```yaml
+level: beginner
+cloud: gcp
+domain: networking
+technology:
+  - vpc
+  - subnets
+  - firewall
+  - compute-engine
+estimated_time: 60 min
+estimated_cost: free-tier
+deployment_type: console + gcloud
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You'll install and authenticate the **gcloud CLI**, then build a **custom VPC network** on Google

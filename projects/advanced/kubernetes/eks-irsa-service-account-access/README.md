@@ -1,5 +1,22 @@
 # IRSA — Give EKS Pods AWS Permissions with a Service Account (and Give People Namespace Access Safely)
 
+```yaml
+level: advanced
+cloud: kubernetes
+domain: security-iam
+technology:
+  - eks
+  - iam
+  - sts
+  - oidc
+  - s3
+estimated_time: 2 hours
+estimated_cost: hourly
+deployment_type: eksctl + kubectl
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will take a fresh **Amazon EKS** cluster and wire up the single most important EKS security

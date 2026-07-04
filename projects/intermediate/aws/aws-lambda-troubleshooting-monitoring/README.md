@@ -1,5 +1,23 @@
 # Lambda Troubleshooting, Monitoring & Boto3 Automation
 
+```yaml
+level: intermediate
+cloud: aws
+domain: observability
+technology:
+  - lambda
+  - s3
+  - ec2
+  - sqs
+  - cloudwatch
+  - logs-insights
+estimated_time: 90 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 The most comprehensive project in the series. You'll:

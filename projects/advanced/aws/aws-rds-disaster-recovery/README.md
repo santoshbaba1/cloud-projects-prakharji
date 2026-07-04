@@ -1,5 +1,20 @@
 # RDS Disaster Recovery — Snapshots, PITR & Cross-Region Failover
 
+```yaml
+level: advanced
+cloud: aws
+domain: disaster-recovery
+technology:
+  - rds
+  - ec2
+  - kms
+estimated_time: 3 hours
+estimated_cost: hourly
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 **Optimization & Recovery Series — Project 2 of 3**
 
 ## What You'll Build

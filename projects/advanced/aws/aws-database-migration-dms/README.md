@@ -1,5 +1,22 @@
 # Database Migration with AWS DMS (Self-Managed MySQL → Amazon RDS)
 
+```yaml
+level: advanced
+cloud: aws
+domain: migration
+technology:
+  - dms
+  - rds
+  - ec2
+  - vpc
+  - iam
+estimated_time: 3 hours
+estimated_cost: hourly
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You migrate a live **MySQL** database from a **self-managed server** (MySQL on an EC2 instance,

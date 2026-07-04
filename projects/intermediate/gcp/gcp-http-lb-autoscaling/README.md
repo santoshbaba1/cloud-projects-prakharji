@@ -1,5 +1,23 @@
 # GCP HTTP Load Balancer & Autoscaling — A Production-Shaped Web Tier
 
+```yaml
+level: intermediate
+cloud: gcp
+domain: networking
+technology:
+  - vpc
+  - cloud-nat
+  - instance-template
+  - mig
+  - health-checks
+  - application-lb
+estimated_time: 90 min
+estimated_cost: hourly
+deployment_type: console + gcloud
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You'll build the way real web backends run on Google Cloud: a fleet of **private** VMs (no public

@@ -1,5 +1,21 @@
 # Lambda with S3 Event Processing
 
+```yaml
+level: beginner
+cloud: aws
+domain: serverless
+technology:
+  - lambda
+  - s3
+  - iam
+  - cloudwatch
+estimated_time: 60 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 An **event-driven file processing pipeline**: every time a file is uploaded to an S3 source bucket, Lambda is automatically triggered, processes the file (word count for `.txt`, row/column stats for `.csv`), and writes a JSON result to a separate destination bucket.

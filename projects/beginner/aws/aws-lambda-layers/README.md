@@ -1,5 +1,20 @@
 # Lambda Layers — Sharing Dependencies Across Functions
 
+```yaml
+level: beginner
+cloud: aws
+domain: serverless
+technology:
+  - lambda
+  - iam
+  - cloudwatch
+estimated_time: 45 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 Two Lambda functions that rely on third-party libraries — `requests` and `pandas` — packaged as **Lambda Layers**. You'll:

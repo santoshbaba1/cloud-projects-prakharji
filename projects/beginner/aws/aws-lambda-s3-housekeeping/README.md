@@ -1,5 +1,22 @@
 # Scheduled S3 Housekeeping — Archive & Delete Old Objects
 
+```yaml
+level: beginner
+cloud: aws
+domain: storage
+technology:
+  - lambda
+  - eventbridge
+  - s3
+  - iam
+  - cloudwatch
+estimated_time: 45 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 **Lambda Automation Series — Project 3 of 3**
 
 ## What You'll Build

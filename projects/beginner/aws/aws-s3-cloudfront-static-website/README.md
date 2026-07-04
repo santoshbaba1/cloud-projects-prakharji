@@ -1,5 +1,21 @@
 # S3 + CloudFront — Host a Static Website on a Global CDN
 
+```yaml
+level: beginner
+cloud: aws
+domain: storage
+technology:
+  - s3
+  - cloudfront
+  - oac
+  - iam
+estimated_time: 60 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will host a simple HTML website in a **private Amazon S3 bucket** and serve it

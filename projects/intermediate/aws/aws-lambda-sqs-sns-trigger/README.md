@@ -1,5 +1,22 @@
 # Lambda Triggered by SQS with SNS Notification
 
+```yaml
+level: intermediate
+cloud: aws
+domain: messaging
+technology:
+  - lambda
+  - sqs
+  - sns
+  - iam
+  - cloudwatch
+estimated_time: 60 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 You will build an **order processing pipeline** — a classic serverless pattern where:

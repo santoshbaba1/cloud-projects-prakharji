@@ -1,5 +1,21 @@
 # API Gateway REST API + Lambda — Build It, Then Ship It Safely
 
+```yaml
+level: intermediate
+cloud: aws
+domain: serverless
+technology:
+  - api-gateway
+  - lambda
+  - iam
+  - cloudwatch
+estimated_time: 90 min
+estimated_cost: free-tier
+deployment_type: console + cli
+cleanup_required: true
+status: ready
+```
+
 ## What You'll Build
 
 A small **Quotes API** on **API Gateway (REST API)** backed by a single **Lambda**

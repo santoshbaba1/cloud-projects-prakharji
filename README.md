@@ -5,6 +5,10 @@ A collection of **26 hands-on projects** designed for students to build real-wor
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
 
+> 🧭 **Looking for a specific project?** Browse the full filterable index in
+> **[PROJECT-CATALOG.md](PROJECT-CATALOG.md)** — sort by level, cloud/tech, domain, time, and cost.
+> The tables below group the same projects by theme and series.
+
 ## Projects
 
 ### IAM & Security
@@ -116,9 +120,9 @@ is, and *which principles* apply.
 
 ### EKS Projects
 
-Projects in the [`eks-projects/`](PROJECT-CATALOG.md) directory focus on **Amazon EKS**
-security, identity, and operations. ⚠️ Each runs a real EKS control plane (**$0.10/hr**, no free
-tier) — delete the cluster the same day. New to Kubernetes? Do the free local lab in
+These **Amazon EKS** projects (under `projects/*/kubernetes/`) focus on security, identity, and
+operations. ⚠️ Each runs a real EKS control plane (**$0.10/hr**, no free tier) — delete the cluster
+the same day. New to Kubernetes? Do the free local lab in
 [k8s-optimization-and-recovery](projects/intermediate/kubernetes/k8s-optimization-and-recovery/README.md) first.
 
 | # | Project | Services | Description |
@@ -127,9 +131,9 @@ tier) — delete the cluster the same day. New to Kubernetes? Do the free local 
 
 ### GCP Networking Projects
 
-The two projects in the [`gcp-projects/`](PROJECT-CATALOG.md) directory are the repo's
-**Google Cloud** labs — networking on GCP instead of AWS. Each step has both a **Console** and a
-**gcloud CLI** path. New to GCP? The beginner project's Step 1 installs and authenticates the CLI.
+The repo's two **Google Cloud** labs (under `projects/*/gcp/`) — networking on GCP instead of AWS.
+Each step has both a **Console** and a **gcloud CLI** path. New to GCP? The beginner project's
+Step 1 installs and authenticates the CLI.
 
 | # | Project | Services | Description |
 |---|---------|----------|-------------|
@@ -140,21 +144,33 @@ The two projects in the [`gcp-projects/`](PROJECT-CATALOG.md) directory are the 
 
 ## How This Repo Is Organized
 
-Each project lives in its own directory and follows a consistent layout:
+Projects are grouped by **level**, then by **cloud or core technology**:
 
 ```
-project-name/
-├── README.md           # Architecture overview and what you'll build
-├── Dockerfile          # (container projects) How to build the image
-├── docker-compose.yml  # (advanced container projects) Local dev setup
-├── steps/              # Numbered, sequential step files
-│   ├── 01-*.md
-│   ├── 02-*.md
-│   └── ...
-├── src/                # Application source code
-├── troubleshooting.md  # Common errors and fixes
-└── challenges.md       # Extra challenges to deepen understanding
+projects/<level>/<cloud-or-tech>/<project-name>/
+          │        │
+          │        └─ aws · gcp · azure · kubernetes · terraform · …
+          └─ beginner · intermediate · advanced
 ```
+
+The full, filterable index lives in **[PROJECT-CATALOG.md](PROJECT-CATALOG.md)** (by level, cloud,
+domain, time, and cost). EKS/Kubernetes projects are grouped under `kubernetes/` by their primary
+skill rather than under `aws/`.
+
+Each project follows a consistent internal layout:
+
+```
+<project-name>/
+├── README.md           # Overview, architecture (Mermaid diagrams), steps, cost, cleanup
+├── Dockerfile          # (container projects) How to build the image
+├── steps/              # Numbered, sequential step files — the last one is always cleanup
+├── src/                # Application source code
+├── troubleshooting.md  # Error → Cause → Fix
+└── challenges.md       # Extension tasks
+```
+
+See [docs/templates/project-template.md](docs/templates/project-template.md) for the full layout
+spec and which files are mandatory vs. optional.
 
 ## Prerequisites (All Projects)
 
@@ -168,7 +184,11 @@ project-name/
 
 ## Contributing a New Project
 
-1. Create a new directory using kebab-case naming (e.g., `s3-static-website`)
-2. Follow the directory structure above
-3. Add an entry to the table in this README
-4. Keep steps atomic — one concept per file
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide — folder naming, required files,
+diagram and cleanup requirements, and the PR checklist. In short:
+
+1. Add your project under `projects/<level>/<cloud-or-tech>/<kebab-name>/` (e.g.
+   `projects/beginner/aws/aws-s3-static-website/`)
+2. Copy the templates in [docs/templates/](docs/templates/) and follow the standard layout
+3. Add a row to [PROJECT-CATALOG.md](PROJECT-CATALOG.md) (and the relevant themed table above)
+4. Keep steps atomic — one concept per file, with cleanup always last

@@ -103,7 +103,7 @@ aws --version
 
 ## 2b. gcloud CLI — *GCP projects only*
 
-Only needed for the two projects under [`gcp-projects/`](gcp-projects/README.md). If you're doing the
+Only needed for the two projects under [`gcp-projects/`](PROJECT-CATALOG.md). If you're doing the
 AWS projects, skip this.
 
 ### Linux
@@ -128,7 +128,7 @@ Download and run the installer from https://cloud.google.com/sdk/docs/install#wi
 
 > **Full walkthrough** — logging in (`gcloud auth login`), creating a project, linking billing, and
 > enabling the Compute Engine API — is **Step 1** of the beginner GCP project:
-> [gcp-vpc-firewall-basics/steps/01-install-gcloud.md](gcp-projects/gcp-vpc-firewall-basics/steps/01-install-gcloud.md).
+> [gcp-vpc-firewall-basics/steps/01-install-gcloud.md](projects/beginner/gcp/gcp-vpc-firewall-basics/steps/01-install-gcloud.md).
 
 ---
 

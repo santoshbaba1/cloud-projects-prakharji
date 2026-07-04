@@ -91,6 +91,18 @@ the README section).
 | Use Mermaid in Markdown | Add an `assets/` directory |
 | Keep it project-specific | Add a `learning-paths/` directory |
 
+## Automated checks (CI)
+
+The `repo-checks` GitHub Action runs on every PR. Run the same checks locally before pushing:
+
+```bash
+python3 scripts/check-markdown-links.py            # every relative link resolves
+python3 scripts/check-required-files.py            # each project has the required structure
+python3 scripts/generate-project-catalog.py --check # PROJECT-CATALOG.md is in sync with metadata
+```
+
+A separate job scans the diff for committed secrets.
+
 ## Pull request checklist
 
 - [ ] Folder is `projects/<level>/<tech>/<kebab-name>/` and named per the rules

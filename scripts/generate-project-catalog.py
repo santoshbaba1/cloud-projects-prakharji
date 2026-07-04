@@ -8,6 +8,7 @@ regenerates the catalog table + grouped sections. Run after adding/editing a pro
 USAGE:
   scripts/generate-project-catalog.py            # print to stdout (dry run)
   scripts/generate-project-catalog.py --write     # overwrite PROJECT-CATALOG.md
+  scripts/generate-project-catalog.py --check      # exit 1 if PROJECT-CATALOG.md is stale (CI)
 """
 import os
 import re
@@ -15,6 +16,8 @@ import sys
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 WRITE = "--write" in sys.argv[1:]
+CHECK = "--check" in sys.argv[1:]
+CATALOG = os.path.join(REPO, "PROJECT-CATALOG.md")
 
 COST_ICON = {"free-tier": "🟢", "low": "🟡", "hourly": "🔴"}
 CLOUD_LABEL = {"aws": "AWS", "gcp": "GCP", "azure": "Azure", "kubernetes": "Kubernetes"}
@@ -155,8 +158,20 @@ def render(rows):
 def main():
     rows = collect()
     text = render(rows)
-    if WRITE:
-        with open(os.path.join(REPO, "PROJECT-CATALOG.md"), "w", encoding="utf-8") as fh:
+    if CHECK:
+        current = ""
+        if os.path.exists(CATALOG):
+            with open(CATALOG, encoding="utf-8") as fh:
+                current = fh.read()
+        if current != text:
+            sys.stderr.write(
+                "PROJECT-CATALOG.md is out of date. Run:\n"
+                "    scripts/generate-project-catalog.py --write\n"
+                "and commit the result.\n")
+            sys.exit(1)
+        print(f"PROJECT-CATALOG.md is up to date ({len(rows)} projects).")
+    elif WRITE:
+        with open(CATALOG, "w", encoding="utf-8") as fh:
             fh.write(text)
         print(f"Wrote PROJECT-CATALOG.md ({len(rows)} projects).")
     else:

@@ -131,7 +131,7 @@ the same day. New to Kubernetes? Do the free local lab in
 
 ### GCP Networking Projects
 
-The repo's two **Google Cloud** labs (under `projects/*/gcp/`) — networking on GCP instead of AWS.
+Two **Google Cloud** labs (under `projects/*/gcp/`) — networking on GCP instead of AWS.
 Each step has both a **Console** and a **gcloud CLI** path. New to GCP? The beginner project's
 Step 1 installs and authenticates the CLI.
 
@@ -139,6 +139,20 @@ Step 1 installs and authenticates the CLI.
 |---|---------|----------|-------------|
 | 1 | [VPC & Firewall Basics](projects/beginner/gcp/gcp-vpc-firewall-basics/README.md) | VPC, Subnets, Firewall, Compute Engine | **Beginner.** Install & authenticate the gcloud CLI, then build a custom VPC with two subnets, three firewall rules, and two VMs — and prove it works with SSH, private ping, a web page, and watching the firewall block unopened ports |
 | 2 | [HTTP Load Balancer & Autoscaling](projects/intermediate/gcp/gcp-http-lb-autoscaling/README.md) | VPC, Cloud NAT, Instance Templates, MIG, Health Checks, Application LB | **Intermediate.** Put **private** autoscaling VMs behind a **global HTTP load balancer** with Cloud NAT for egress, then load-test to scale out and delete a VM to watch the managed instance group self-heal |
+
+### GCP IAM, Storage & Databases Projects
+
+Four **Google Cloud** projects (under `projects/*/gcp/`) covering IAM, Cloud Storage, and managed
+databases in depth. A single fictional retailer, **Meridian Retail**, runs through all four — do
+them in order. Assumes the gcloud CLI is already installed (see the networking track above or
+[SETUP.md](SETUP.md)).
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [IAM & Storage Fundamentals](projects/beginner/gcp/gcp-iam-storage-fundamentals/README.md) | IAM, Service Accounts, Cloud Storage | **Beginner.** Principals, policy anatomy, basic vs. predefined roles, a least-privilege service account, and a documents bucket — proven with **key-less service account impersonation** instead of a downloaded key |
+| 2 | [Storage Security & Lifecycle](projects/intermediate/gcp/gcp-storage-security-lifecycle/README.md) | Cloud Storage, Cloud KMS, IAM Conditions, Custom Roles | **Intermediate.** A custom IAM role scoped further with an IAM Condition, versioning + lifecycle tiering, CMEK encryption, keyless signed URLs vs. a public static-website bucket, and bucket logging |
+| 3 | [Cloud SQL Managed Database](projects/intermediate/gcp/gcp-cloud-sql-managed-database/README.md) | Cloud SQL, IAM Database Auth | **Intermediate.** Retire an on-prem MySQL box onto managed Cloud SQL — IAM database authentication, automated backups, a point-in-time-recovery drill, and a read replica |
+| 4 | [Databases at Scale & Workload Identity](projects/advanced/gcp/gcp-databases-workload-identity/README.md) | Firestore, Memorystore, Secret Manager, Workload Identity Federation | **Advanced.** Firestore for real-time carts, Memorystore for caching, Secret Manager for credentials, and **Workload Identity Federation** for a keyless GitHub Actions deploy — plus a Cloud SQL/Firestore/Bigtable/Spanner/Memorystore decision matrix |
 
 ### Docker Projects
 

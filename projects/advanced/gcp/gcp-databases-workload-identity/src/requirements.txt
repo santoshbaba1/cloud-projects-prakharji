@@ -1,0 +1,2 @@
+google-cloud-firestore==2.20.1
+redis==5.2.1

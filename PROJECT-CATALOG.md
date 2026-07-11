@@ -40,19 +40,23 @@ The main navigation page for this repo. Pick a project by **level, cloud/tech, d
 | 26 | Intermediate | GCP | networking | [GCP HTTP Load Balancer & Autoscaling](projects/intermediate/gcp/gcp-http-lb-autoscaling/README.md) | 90 min | 🔴 | ✅ |
 | 27 | Beginner | Docker | networking | [Docker Networking Basics](projects/beginner/docker/docker-network-flask-basics/README.md) | 45-60 minutes | 🟢 | ✅ |
 | 28 | Intermediate | Docker | networking-storage | [Docker Networks & Storage](projects/intermediate/docker/docker-networks-storage-notes/README.md) | 75-90 minutes | 🟢 | ✅ |
+| 29 | Beginner | GCP | security-iam | [GCP IAM & Storage Fundamentals](projects/beginner/gcp/gcp-iam-storage-fundamentals/README.md) | 60-75 min | 🟢 | ✅ |
+| 30 | Intermediate | GCP | storage | [GCP Storage Security & Lifecycle](projects/intermediate/gcp/gcp-storage-security-lifecycle/README.md) | 90-110 min | 🟡 | ✅ |
+| 31 | Intermediate | GCP | databases | [Cloud SQL Managed Database](projects/intermediate/gcp/gcp-cloud-sql-managed-database/README.md) | 90-120 min | 🔴 | ✅ |
+| 32 | Advanced | GCP | databases | [GCP Databases & Workload Identity](projects/advanced/gcp/gcp-databases-workload-identity/README.md) | 2-2.5 hours | 🔴 | ✅ |
 
-> 🔴 **Real-cost projects** (17, 18, 19, 21, 22, 23, 26): bill per hour with no free-tier umbrella. Do the cleanup step **the same day**.
+> 🔴 **Real-cost projects** (17, 18, 19, 21, 22, 23, 26, 31, 32): bill per hour with no free-tier umbrella. Do the cleanup step **the same day**.
 
 ## By level
 
 ### Beginner
-1 Lambda Basics · 2 Lambda with S3 Event Processing · 3 Lambda Layers · 4 Lambda on a Schedule with EventBridge · 5 Scheduled EC2 Start/Stop · 6 Scheduled S3 Housekeeping · 7 S3 + CloudFront · 8 Event-Driven Messaging with SNS & SQS · 25 GCP VPC & Firewall Basics · 27 Docker Networking Basics
+1 Lambda Basics · 2 Lambda with S3 Event Processing · 3 Lambda Layers · 4 Lambda on a Schedule with EventBridge · 5 Scheduled EC2 Start/Stop · 6 Scheduled S3 Housekeeping · 7 S3 + CloudFront · 8 Event-Driven Messaging with SNS & SQS · 25 GCP VPC & Firewall Basics · 27 Docker Networking Basics · 29 GCP IAM & Storage Fundamentals
 
 ### Intermediate
-9 Lambda Triggered by SQS with SNS Notification · 10 Lambda Troubleshooting, Monitoring & Boto3 Automation · 11 IAM Roles & Policies · 12 API Gateway REST API + Lambda · 13 API Gateway HTTP API + Lambda + DynamoDB · 14 Serverless Monitored Web App · 15 EC2 Compute Rightsizing · 16 ECS Fargate Basics · 24 Kubernetes Optimization & Recovery · 26 GCP HTTP Load Balancer & Autoscaling · 28 Docker Networks & Storage
+9 Lambda Triggered by SQS with SNS Notification · 10 Lambda Troubleshooting, Monitoring & Boto3 Automation · 11 IAM Roles & Policies · 12 API Gateway REST API + Lambda · 13 API Gateway HTTP API + Lambda + DynamoDB · 14 Serverless Monitored Web App · 15 EC2 Compute Rightsizing · 16 ECS Fargate Basics · 24 Kubernetes Optimization & Recovery · 26 GCP HTTP Load Balancer & Autoscaling · 28 Docker Networks & Storage · 30 GCP Storage Security & Lifecycle · 31 Cloud SQL Managed Database
 
 ### Advanced
-17 ECS Fargate Advanced · 18 EC2 + VPC Monitored Web App · 19 RDS Disaster Recovery · 20 Monolith → Serverless Migration · 21 Database Migration with AWS DMS · 22 Monolith → Microservices on Kubernetes · 23 IRSA
+17 ECS Fargate Advanced · 18 EC2 + VPC Monitored Web App · 19 RDS Disaster Recovery · 20 Monolith → Serverless Migration · 21 Database Migration with AWS DMS · 22 Monolith → Microservices on Kubernetes · 23 IRSA · 32 GCP Databases & Workload Identity
 
 ## By cloud / technology
 
@@ -60,7 +64,7 @@ The main navigation page for this repo. Pick a project by **level, cloud/tech, d
 1 Lambda Basics · 2 Lambda with S3 Event Processing · 3 Lambda Layers · 4 Lambda on a Schedule with EventBridge · 5 Scheduled EC2 Start/Stop · 6 Scheduled S3 Housekeeping · 7 S3 + CloudFront · 8 Event-Driven Messaging with SNS & SQS · 9 Lambda Triggered by SQS with SNS Notification · 10 Lambda Troubleshooting, Monitoring & Boto3 Automation · 11 IAM Roles & Policies · 12 API Gateway REST API + Lambda · 13 API Gateway HTTP API + Lambda + DynamoDB · 14 Serverless Monitored Web App · 15 EC2 Compute Rightsizing · 16 ECS Fargate Basics · 17 ECS Fargate Advanced · 18 EC2 + VPC Monitored Web App · 19 RDS Disaster Recovery · 20 Monolith → Serverless Migration · 21 Database Migration with AWS DMS
 
 ### GCP Projects
-25 GCP VPC & Firewall Basics · 26 GCP HTTP Load Balancer & Autoscaling
+25 GCP VPC & Firewall Basics · 26 GCP HTTP Load Balancer & Autoscaling · 29 GCP IAM & Storage Fundamentals · 30 GCP Storage Security & Lifecycle · 31 Cloud SQL Managed Database · 32 GCP Databases & Workload Identity
 
 ### Azure Projects
 *None yet.*

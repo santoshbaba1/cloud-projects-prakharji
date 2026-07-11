@@ -1,0 +1,60 @@
+# Sample GitHub Actions workflow — deploy using Workload Identity Federation.
+#
+# This file is a TEMPLATE to copy into the .github/workflows/ folder of your OWN
+# application repository. It will not run inside the cloud-projects repo (GitHub
+# only runs workflows from a repo's root .github/workflows/).
+#
+# Mirrors this repo's AWS GitHub-OIDC deploy pattern (see
+# aws-serverless-monitored-webapp/steps/07-github-actions-deploy.md and its
+# .github/workflows/deploy.yml) but on GCP: google-github-actions/auth@v2 exchanges
+# GitHub's OIDC token for short-lived GCP credentials via Workload Identity
+# Federation. No JSON key file is generated, downloaded, or stored anywhere.
+#
+# Prerequisites (created in Step 04):
+#   - Workload Identity Pool "github-pool" and Provider "github-provider"
+#   - Provider attribute condition scoped to YOUR_ORG/YOUR_REPO only
+#   - Deploy service account "meridian-deployer" bound to the pool via
+#     roles/iam.workloadIdentityUser
+#
+# Before using: replace <PROJECT_NUMBER> and <PROJECT_ID> below with your own values.
+name: Deploy Meridian Retail Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write   # required — this is what lets GitHub mint the OIDC token WIF consumes
+  contents: read
+
+env:
+  GCP_REGION: us-east1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: meridian-deployer@<PROJECT_ID>.iam.gserviceaccount.com
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Confirm the authenticated identity (no key file involved)
+        run: gcloud auth list --format="value(account)"
+
+      - name: Deploy (placeholder — replace with your actual deploy command)
+        run: |
+          echo "Deploying to project <PROJECT_ID> in ${GCP_REGION}..."
+          # Example once you're ready (see challenges.md #6 for a full Cloud Run walkthrough):
+          # gcloud run deploy meridian-storefront \
+          #   --source=. \
+          #   --region=${GCP_REGION} \
+          #   --project=<PROJECT_ID>

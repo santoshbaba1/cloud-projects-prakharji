@@ -15,7 +15,7 @@ This guide installs every tool the projects in this repo use, with steps for **L
 |------|--------------|------------------------|
 | **AWS account + credentials** | Every project (it all runs in AWS) | `aws sts get-caller-identity` |
 | **AWS CLI v2** | Every AWS project (the `aws ...` commands) | `aws --version` → `aws-cli/2.x` |
-| **gcloud CLI** | **GCP projects only** (`gcp-projects/`) | `gcloud --version` → `Google Cloud SDK` |
+| **gcloud CLI** | **GCP projects only** (`projects/*/gcp/`) | `gcloud --version` → `Google Cloud SDK` |
 | **Python 3.12+ & pip** | App code, `test_app.py`, Boto3 automation | `python3 --version`, `pip3 --version` |
 | **Git** | Cloning this repo; GitHub Actions deploy steps | `git --version` |
 | **A code editor** (VS Code) | Reading/editing files (recommended, optional) | opens `.md` and `.py` files |
@@ -103,8 +103,9 @@ aws --version
 
 ## 2b. gcloud CLI — *GCP projects only*
 
-Only needed for the two projects under [`gcp-projects/`](PROJECT-CATALOG.md). If you're doing the
-AWS projects, skip this.
+Only needed for the GCP projects under [`projects/*/gcp/`](PROJECT-CATALOG.md) — the 2-project
+networking track and the 4-project IAM/Storage/Databases track. If you're doing the AWS projects,
+skip this.
 
 ### Linux
 

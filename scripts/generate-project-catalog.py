@@ -35,6 +35,8 @@ ORDER = [
     "aws-monolith-to-serverless-migration", "aws-database-migration-dms",
     "eks-monolith-to-microservices", "eks-irsa-service-account-access",
     "k8s-optimization-and-recovery", "gcp-vpc-firewall-basics", "gcp-http-lb-autoscaling",
+    "gcp-iam-storage-fundamentals", "gcp-storage-security-lifecycle",
+    "gcp-cloud-sql-managed-database", "gcp-databases-workload-identity",
     "docker-network-flask-basics", "docker-networks-storage-notes",
 ]
 
@@ -76,7 +78,8 @@ def title_of(readme_text):
 def collect():
     rows = []
     base = os.path.join(REPO, "projects")
-    for root, _d, files in os.walk(base):
+    for root, dirs, files in os.walk(base):
+        dirs.sort()  # deterministic traversal regardless of filesystem order
         if "README.md" not in files:
             continue
         rel = os.path.relpath(root, base)
@@ -98,8 +101,10 @@ def collect():
             "time": meta.get("estimated_time", "?"),
             "cost": meta.get("estimated_cost", "?"),
         })
+    # r["name"] tiebreaker keeps the sort a total order, so projects missing from
+    # ORDER get a stable alphabetical position instead of falling back to walk order.
     rows.sort(key=lambda r: (ORDER.index(r["name"]) if r["name"] in ORDER
-                             else 999 + LEVEL_ORDER.get(r["level"], 9)))
+                             else 999 + LEVEL_ORDER.get(r["level"], 9), r["name"]))
     for i, r in enumerate(rows, 1):
         r["order"] = i
     return rows

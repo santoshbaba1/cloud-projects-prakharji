@@ -1,0 +1,24 @@
+# Cloud Build config: build the container image and push it to Artifact Registry.
+#
+# Run from the src/ directory (where the Dockerfile lives):
+#   gcloud builds submit --config cloudbuild.yaml \
+#     --substitutions=_TAG=v1 .
+#
+# $PROJECT_ID is provided automatically by Cloud Build. _TAG defaults to "latest"
+# but you can override it per build with --substitutions=_TAG=<something>.
+substitutions:
+  _REGION: us-east1
+  _REPO: meridian-apps
+  _IMAGE: meridian-web
+  _TAG: latest
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${_TAG}
+      - .
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${_TAG}

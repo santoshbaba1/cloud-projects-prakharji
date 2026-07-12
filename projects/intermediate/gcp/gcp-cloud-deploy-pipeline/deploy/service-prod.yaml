@@ -1,0 +1,23 @@
+# Cloud Run service manifest for the PROD target (Knative Service format).
+#
+# Same image placeholder as staging — the identical build is promoted, only the
+# env/config differs. That "promote the same artifact" guarantee is the whole
+# point of a delivery pipeline.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: meridian-web-prod
+spec:
+  template:
+    spec:
+      containers:
+        - image: meridian-web
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TARGET
+              value: prod
+            - name: GREETING
+              value: "Meridian Retail"
+            - name: APP_VERSION
+              value: "1.0"

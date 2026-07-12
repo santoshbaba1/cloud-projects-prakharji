@@ -1,0 +1,23 @@
+# Cloud Run service manifest for the STAGING target (Knative Service format).
+#
+# `image: meridian-web` is a placeholder replaced at release time by
+# `--images=meridian-web=<Artifact Registry image>`. The env vars mark this as the
+# staging stage so the app's / route reports target=staging.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: meridian-web-staging
+spec:
+  template:
+    spec:
+      containers:
+        - image: meridian-web
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TARGET
+              value: staging
+            - name: GREETING
+              value: "Meridian Retail — STAGING"
+            - name: APP_VERSION
+              value: "1.0"

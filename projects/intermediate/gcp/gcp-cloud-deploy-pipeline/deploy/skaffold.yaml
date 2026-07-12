@@ -1,0 +1,23 @@
+# Skaffold config that tells Cloud Deploy HOW to render and deploy each target.
+#
+# We don't build here (Cloud Build already produced the image in Step 2); we only
+# deploy a pre-built image to Cloud Run. Each Cloud Deploy target activates one
+# profile below, which selects that stage's Cloud Run service manifest.
+#
+# The `image: meridian-web` placeholder inside each manifest is replaced at
+# release time by `gcloud deploy releases create --images=meridian-web=<REAL_IMAGE>`.
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: meridian-web
+deploy:
+  cloudrun: {}
+profiles:
+  - name: staging
+    manifests:
+      rawYaml:
+        - service-staging.yaml
+  - name: prod
+    manifests:
+      rawYaml:
+        - service-prod.yaml

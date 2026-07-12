@@ -1,0 +1,36 @@
+# The Cloud Deploy delivery pipeline + its two targets.
+#
+# Pipeline: a serial promotion path staging → prod. Each stage names a target and
+# the Skaffold profile that renders it.
+# Targets: both are Cloud Run in the SAME project/region here; `prod` requires a
+# manual approval before its rollout proceeds.
+#
+# Replace PROJECT_ID below (Step 3 does this with sed), then `gcloud deploy apply`.
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: meridian-web-pipeline
+description: Promote the Meridian storefront through staging then prod
+serialPipeline:
+  stages:
+    - targetId: staging
+      profiles: [staging]
+    - targetId: prod
+      profiles: [prod]
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: staging
+description: Cloud Run staging
+run:
+  location: projects/PROJECT_ID/locations/us-east1
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod
+description: Cloud Run production (manual approval required)
+requireApproval: true
+run:
+  location: projects/PROJECT_ID/locations/us-east1

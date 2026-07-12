@@ -37,6 +37,7 @@ ORDER = [
     "k8s-optimization-and-recovery", "gcp-vpc-firewall-basics", "gcp-http-lb-autoscaling",
     "gcp-iam-storage-fundamentals", "gcp-storage-security-lifecycle",
     "gcp-cloud-sql-managed-database", "gcp-databases-workload-identity",
+    "gcp-cloud-run-artifact-registry", "gcp-cloud-deploy-pipeline",
     "docker-network-flask-basics", "docker-networks-storage-notes",
 ]
 

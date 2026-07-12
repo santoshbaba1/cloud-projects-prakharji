@@ -1,6 +1,6 @@
 # Cloud Hands-On Projects
 
-A collection of **26 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus a pair of Google Cloud networking labs and local Kubernetes labs.
+A collection of **34 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus a set of Google Cloud labs and local Kubernetes labs.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
@@ -153,6 +153,17 @@ them in order. Assumes the gcloud CLI is already installed (see the networking t
 | 2 | [Storage Security & Lifecycle](projects/intermediate/gcp/gcp-storage-security-lifecycle/README.md) | Cloud Storage, Cloud KMS, IAM Conditions, Custom Roles | **Intermediate.** A custom IAM role scoped further with an IAM Condition, versioning + lifecycle tiering, CMEK encryption, keyless signed URLs vs. a public static-website bucket, and bucket logging |
 | 3 | [Cloud SQL Managed Database](projects/intermediate/gcp/gcp-cloud-sql-managed-database/README.md) | Cloud SQL, IAM Database Auth | **Intermediate.** Retire an on-prem MySQL box onto managed Cloud SQL — IAM database authentication, automated backups, a point-in-time-recovery drill, and a read replica |
 | 4 | [Databases at Scale & Workload Identity](projects/advanced/gcp/gcp-databases-workload-identity/README.md) | Firestore, Memorystore, Secret Manager, Workload Identity Federation | **Advanced.** Firestore for real-time carts, Memorystore for caching, Secret Manager for credentials, and **Workload Identity Federation** for a keyless GitHub Actions deploy — plus a Cloud SQL/Firestore/Bigtable/Spanner/Memorystore decision matrix |
+
+### GCP App Delivery Projects
+
+Two **Google Cloud** projects (under `projects/*/gcp/`) covering how containers get **built, stored,
+and shipped** on GCP — from a single `gcloud` deploy to a managed continuous-delivery pipeline. Do
+them in order; the second reuses the first's image. Assumes the gcloud CLI is already installed.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [Cloud Run & Artifact Registry](projects/beginner/gcp/gcp-cloud-run-artifact-registry/README.md) | Cloud Build, Artifact Registry, Cloud Run | **Beginner.** Build a Flask container with **Cloud Build**, push it to **Artifact Registry**, and deploy it to **Cloud Run** (scale-to-zero HTTPS) — then ship a v2 and use revisions + traffic splitting to canary and roll back |
+| 2 | [Cloud Deploy Pipeline](projects/intermediate/gcp/gcp-cloud-deploy-pipeline/README.md) | Cloud Deploy, Cloud Run, Cloud Build, Artifact Registry, Skaffold | **Intermediate.** Wrap that image in a **Cloud Deploy** delivery pipeline that promotes one immutable artifact through **staging → prod** with a manual **approval gate** and a one-command **rollback** — build once, deploy many |
 
 ### Docker Projects
 

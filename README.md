@@ -1,6 +1,6 @@
 # Cloud Hands-On Projects
 
-A collection of **34 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus a set of Google Cloud labs and local Kubernetes labs.
+A collection of **37 hands-on projects** designed for students to build real-world cloud skills through guided, step-by-step exercises — mostly in their own AWS accounts, plus a set of Google Cloud labs and local Kubernetes labs.
 
 > 🚀 **First time here? Start with [SETUP.md](SETUP.md)** — it installs every tool you need
 > (AWS CLI, Python, Git, Docker, …) with steps for **Linux, macOS, and Windows**.
@@ -164,6 +164,18 @@ them in order; the second reuses the first's image. Assumes the gcloud CLI is al
 |---|---------|----------|-------------|
 | 1 | [Cloud Run & Artifact Registry](projects/beginner/gcp/gcp-cloud-run-artifact-registry/README.md) | Cloud Build, Artifact Registry, Cloud Run | **Beginner.** Build a Flask container with **Cloud Build**, push it to **Artifact Registry**, and deploy it to **Cloud Run** (scale-to-zero HTTPS) — then ship a v2 and use revisions + traffic splitting to canary and roll back |
 | 2 | [Cloud Deploy Pipeline](projects/intermediate/gcp/gcp-cloud-deploy-pipeline/README.md) | Cloud Deploy, Cloud Run, Cloud Build, Artifact Registry, Skaffold | **Intermediate.** Wrap that image in a **Cloud Deploy** delivery pipeline that promotes one immutable artifact through **staging → prod** with a manual **approval gate** and a one-command **rollback** — build once, deploy many |
+
+### GCP Serverless Projects (Beginner → Advanced)
+
+Three **Google Cloud** projects (under `projects/*/gcp/`) building the **Meridian Retail** order
+backend on serverless primitives — from a single HTTP function to a full multi-step orchestration.
+Do them in order; each layers on the last. The GCP counterpart to this repo's AWS **Lambda series**.
+
+| # | Project | Services | Description |
+|---|---------|----------|-------------|
+| 1 | [Cloud Functions Basics](projects/beginner/gcp/gcp-cloud-functions-basics/README.md) | Cloud Functions (2nd gen), Cloud Scheduler, Cloud Logging | **Beginner.** Deploy a Python HTTP function (no `Dockerfile` — buildpacks), call it over HTTPS, reconfigure it with env vars, read **structured logs**, and put it on a **Cloud Scheduler** cron. Learn why a 2nd-gen function *is* a Cloud Run service |
+| 2 | [Event-Driven Functions](projects/intermediate/gcp/gcp-event-driven-functions-pubsub/README.md) | Cloud Functions, Eventarc, Pub/Sub, Firestore, Cloud Storage | **Intermediate.** A file dropped in a bucket fires **Eventarc → a function → Firestore → Pub/Sub → a second function**. Teaches the Eventarc trust chain, CloudEvents, fan-out, at-least-once delivery + idempotency, and dead-letter topics |
+| 3 | [Serverless Orchestration](projects/advanced/gcp/gcp-serverless-workflows-orchestration/README.md) | Cloud Workflows, Cloud Functions, Cloud Tasks, API Gateway | **Advanced.** Coordinate five functions into an **order-fulfillment workflow** with retries, a **saga** auto-refund on failure, async shipping via **Cloud Tasks**, and a public **API Gateway** front door — the full identity chain wired hop by hop |
 
 ### Docker Projects
 

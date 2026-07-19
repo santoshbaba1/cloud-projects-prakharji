@@ -1,0 +1,6 @@
+# Keep the uploaded source tiny — only main.py + requirements.txt are needed.
+.git
+.gitignore
+README.md
+__pycache__/
+*.pyc

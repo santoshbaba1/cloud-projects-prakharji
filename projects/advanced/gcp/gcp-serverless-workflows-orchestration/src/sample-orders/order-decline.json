@@ -1,0 +1,8 @@
+{
+  "order_id": "5003",
+  "customer": "linus@example.com",
+  "item": "Leather Boots",
+  "quantity": 1,
+  "total": 145.50,
+  "simulate": "decline"
+}

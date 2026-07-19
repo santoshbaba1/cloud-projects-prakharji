@@ -1,0 +1,109 @@
+# order-fulfillment — Cloud Workflows definition
+#
+# Orchestrates the order steps as a saga:
+#   validate → charge (with retry on transient errors) → enqueue async shipping
+# If shipping enqueue fails AFTER a successful charge, it compensates (refunds).
+#
+# The __TOKEN__ placeholders are replaced with the deployed function URLs / project
+# values by Step 4 (an envsubst/sed step) before `gcloud workflows deploy`.
+#
+# Note: expression values ${...} are single-quoted so YAML doesn't misparse the
+# ':' inside them as a mapping. This is the standard style for Workflows YAML.
+main:
+  params: [order]
+  steps:
+    - init:
+        assign:
+          - validateUrl: "__VALIDATE_URL__"
+          - chargeUrl: "__CHARGE_URL__"
+          - refundUrl: "__REFUND_URL__"
+          - shippingUrl: "__SHIPPING_URL__"
+          - project: "__PROJECT_ID__"
+          - location: "us-east1"
+          - queue: "order-shipping-queue"
+          - tasksSa: "__TASKS_SA__"
+
+    # ---- Step 1: validate ------------------------------------------------------
+    - validate:
+        call: http.post
+        args:
+          url: '${validateUrl}'
+          auth:
+            type: OIDC
+          body: '${order}'
+        result: validation
+    - checkValidation:
+        switch:
+          - condition: '${validation.body.status != "valid"}'
+            raise:
+              code: 400
+              message: '${"order rejected at validation: " + validation.body.reason}'
+
+    # ---- Step 2: charge (retry transient failures) -----------------------------
+    - charge:
+        try:
+          call: http.post
+          args:
+            url: '${chargeUrl}'
+            auth:
+              type: OIDC
+            body: '${order}'
+          result: charge
+        retry:
+          predicate: '${http.default_retry_predicate}'   # retries 429/502/503/504
+          max_retries: 3
+          backoff:
+            initial_delay: 2
+            max_delay: 20
+            multiplier: 2
+        except:
+          as: e
+          steps:
+            - chargeFailed:
+                raise:
+                  code: 402
+                  message: '${"payment failed for order " + order.order_id}'
+
+    # ---- Step 3: enqueue async shipping via Cloud Tasks ------------------------
+    - enqueueShipping:
+        try:
+          call: googleapis.cloudtasks.v2.projects.locations.queues.tasks.create
+          args:
+            parent: '${"projects/" + project + "/locations/" + location + "/queues/" + queue}'
+            body:
+              task:
+                httpRequest:
+                  httpMethod: POST
+                  url: '${shippingUrl}'
+                  headers:
+                    Content-Type: "application/json"
+                  oidcToken:
+                    serviceAccountEmail: '${tasksSa}'
+                  body: '${base64.encode(json.encode(order))}'
+          result: task
+        except:
+          as: e
+          steps:
+            # Compensation: shipping couldn't be scheduled, so undo the charge.
+            - compensate:
+                call: http.post
+                args:
+                  url: '${refundUrl}'
+                  auth:
+                    type: OIDC
+                  body:
+                    order_id: '${order.order_id}'
+                    transaction_id: '${charge.body.transaction_id}'
+                result: refund
+            - reportCompensated:
+                raise:
+                  code: 500
+                  message: '${"shipping enqueue failed; payment refunded (saga compensation) for order " + order.order_id}'
+
+    # ---- Done ------------------------------------------------------------------
+    - done:
+        return:
+          order_id: '${order.order_id}'
+          status: "fulfillment_started"
+          transaction_id: '${charge.body.transaction_id}'
+          task: '${task.name}'

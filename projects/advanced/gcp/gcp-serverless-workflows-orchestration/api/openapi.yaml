@@ -1,0 +1,37 @@
+# API Gateway config (OpenAPI 2.0 / Swagger) for orders-gateway.
+# __INTAKE_URL__ is replaced with the deployed order-intake function URL by Step 5.
+swagger: "2.0"
+info:
+  title: orders-gateway
+  description: Public front door for Meridian order intake
+  version: "1.0.0"
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /orders:
+    post:
+      operationId: createOrder
+      summary: Submit an order; starts the order-fulfillment workflow
+      # x-google-backend routes matched requests to the order-intake function.
+      # API Gateway mints an OIDC token for this Google backend automatically,
+      # signed as the gateway's service account (which holds run.invoker).
+      x-google-backend:
+        address: __INTAKE_URL__
+        protocol: h2
+      consumes:
+        - application/json
+      responses:
+        "202":
+          description: Order accepted; fulfillment started
+        "400":
+          description: Malformed order
+  /healthz:
+    get:
+      operationId: health
+      x-google-backend:
+        address: __INTAKE_URL__
+      responses:
+        "200":
+          description: OK
